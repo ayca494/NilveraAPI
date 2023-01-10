@@ -1,11 +1,11 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using Newtonsoft.Json;
+using NilveraAPI;
 using NilveraAPI.Models.Dto;
-using NilveraAPI.Models.UblModels.Invoice;
-using NilveraAPI.Models.UblModels.Shared;
 using RestSharp;
-
-
+using System.IO;
+using System.Xml.Linq;
+using System.Xml.Serialization;
 
 EInvoiceDto EInvoice = new EInvoiceDto()
 {
@@ -130,296 +130,139 @@ EInvoiceDto EInvoice = new EInvoiceDto()
 
 
 
-UblInvoice ublInvoice = new UblInvoice()
-{
-    UBLVersionID = "2.1",
-    CustomizationID = "TR1.2.1",
-    CopyIndicator = false,
-    ProfileID = "EARSIVBELGE",
-    ID = "EFT",
-    UUID = "c076ee64-4190-4774-ac90-8f5e73a28ab5",
-    IssueDate = "2022-09-21",
-    IssueTime = "10:21:00",
-    Notes = new List<string>()
-    {
-        "deneme",
-        "notu"
-    },
-    DocumentCurrencyCode = new DocumentCurrencyCode()
-    {
-        Name = "TRY"
-    },
-    LineCountNumeric = 1,
-    AdditionalDocumentReferences = new List<DocumentReference>() { new DocumentReference {
-        ID = new IDType(){Id = "ELEKTRONIK" , SchemeId = "ELK"},
-        IssueDate = "2022-09-21",
-        DocumentTypeCode ="SEND_TYPE"
-    } },
-    AccountingSupplierParty = new SupplierParty()
-    {
-        Party = new Party()
-        {
-            WebSiteURI = "www.nilvera.com",
-            PartyIdentification = new List<PartyIdentification>()
-            {
-                new PartyIdentification() { ID = new IDType() { Id = "6310540565", SchemeId = "VKN" } },
-                new PartyIdentification() { ID = new IDType() { Id = "1122334455667788", SchemeId = "MERSISNO" } },
-                new PartyIdentification() { ID = new IDType() { Id = "12345", SchemeId = "TICARETSICILNO" } },
-            },
-            PartyName = new PartyName() { Name = "NİLVERA YAZILIM VE BİLİŞİM HİZMETLERİ TİCARET LİMİTED ŞİRKETİ" },
-            PostalAddress = new Address()
-            {
-                StreetName = "Yıldırım Beyazıt Mah. Aşıkveysel Bulv. Erciyes Teknopark 3",
-                CitySubdivisionName = "Melikgazi",
-                CityName = "Kayseri",
-                PostalZone = "34704",
-                Country = new Country() { Name = "Türkiye" }
-            },
-            PartyTaxScheme = new PartyTaxScheme()
-            {
-                TaxScheme = new TaxScheme()
-                {
-                    Name = "ERCİYES"
-                }
-            },
-            Contact = new Contact()
-            {
-                Telephone = "08502514010",
-                ElectronicMail = "info@nilvera.com"
-            },
-        },
-    },
-    AccountingCustomerParty = new CustomerParty()
-    {
-        Party = new Party()
-        {
-            Person = new Person()
-            {
-                FirstName = "Feride",
-                FamilyName = "Çolak"
-            },
-            WebSiteURI = "www.deneme.com",
-            AgentParty = null,
-            PartyIdentification = new List<PartyIdentification>()
-            {
-                new PartyIdentification() {ID = new IDType(){ Id="12345678902",SchemeId="TCKN"}},
-            },
-            PostalAddress = new Address()
-            {
-                StreetName = "Yıldırım Beyazıt Mah.",
-                CitySubdivisionName = "Melikgazi",
-                CityName = "Kayseri",
-                PostalZone = "38050",
-
-                Country = new Country() { Name = "Türkiye" }
-            },
-            PartyTaxScheme = new PartyTaxScheme()
-            {
-                TaxScheme = new TaxScheme()
-                {
-                    Name = "Melikgazi Vergi Dairesi"
-                }
-            },
-            Contact = new Contact()
-            {
-                Telefax = "05342354657",
-                Telephone = "05342354657"
-            },
-        }
-    },
-    TaxTotals = new List<TaxTotal>() { new TaxTotal {
-        TaxAmount = new BaseCurrency()
-        {
-            CurrencyID = "TRY",
-            Value = 30.80m
-        },
-        TaxSubtotals = new List<TaxSubtotal>()
-        {
-            new TaxSubtotal()
-            {
-                CalculationSequenceNumeric = 1,
-                Percent = 20m,
-                TaxAmount = new BaseCurrency()
-                {
-                    CurrencyID = "TRY",
-                    Value = 20m
-                },
-                TaxCategory = new TaxCategory()
-                {
-                    TaxScheme = new TaxScheme()
-                    {
-                        TaxTypeCode = "0003",
-                        Name = "GV. Stpj."
-                    }
-                },
-                TaxableAmount = new BaseCurrency()
-                {
-                    CurrencyID ="TRY",
-                    Value = 100m
-                }
-            },
-            new TaxSubtotal()
-            {
-                 CalculationSequenceNumeric = 2,
-                TaxableAmount = new BaseCurrency()
-                {
-                    CurrencyID = "TRY",
-                    Value = 100
-                },
-                TaxAmount = new BaseCurrency()
-                {
-                    CurrencyID = "TRY",
-                    Value = 18m
-                },
-                Percent = 18m,
-                TaxCategory = new TaxCategory()
-                {
-                    TaxScheme = new TaxScheme()
-                    {
-                        Name = "KDV",
-                        TaxTypeCode = "0015"
-                    }
-                }
-            },
-        }
-    } },
-    WithholdingTaxTotals = new List<TaxTotal>()
-    {
-        new TaxTotal()
-        {
-            TaxAmount = new BaseCurrency()
-            {
-                CurrencyID = "TRY",
-                Value = 7.2m
-            },
-            TaxSubtotals = new List<TaxSubtotal>()
-            {
-                new TaxSubtotal()
-                {
-                     CalculationSequenceNumeric = 1,
-                     Percent = 40m,
-                     TaxAmount = new BaseCurrency()
-                     {
-                         CurrencyID = "TRY",
-                         Value = 7.2m
-                     },
-                     TaxCategory = new TaxCategory()
-                     {
-                         TaxScheme = new TaxScheme()
-                         {
-                             TaxTypeCode = "601",
-                             Name = "601 - Yapım İşleri İle Bu İşlerle Birlikte İfa Edilen Mühendislik-Mimarlık ve Etüt-Proje Hizmetleri [GT 117-Bölüm (3.2.1)]"
-                         }
-                     },
-                     TaxableAmount = new BaseCurrency()
-                     {
-                         CurrencyID ="TRY",
-                         Value = 18m
-                     }
-                },
-            }
-        }
-    },
-    LegalMonetaryTotal = new MonetaryTotal()
-    {
-        LineExtensionAmount = new BaseCurrency() { CurrencyID = "TRY", Value = 2800m },
-        TaxInclusiveAmount = new BaseCurrency() { CurrencyID = "TRY", Value = 6577m },
-        PayableAmount = new BaseCurrency() { CurrencyID = "TRY", Value = 3209.5m },
-    },
-    InvoiceLines = new List<InvoiceLine>()
-    {
-        new InvoiceLine()
-        {
-            ID = new IDType(){ Id = "1"},
-            Price = new Price()
-            {
-               PriceAmount = new BaseCurrency()
-               {
-                    CurrencyID = "TRY",
-                    Value =  80m
-               }
-            },
-            TaxTotal = new TaxTotal()
-            {
-                TaxAmount = new BaseCurrency()
-                {
-                    CurrencyID = "TRY",
-                    Value = 30.8m
-                },
-                TaxSubtotals = new List<TaxSubtotal>()
-                {
-                     new TaxSubtotal()
-                     {
-                          CalculationSequenceNumeric = 1,
-                         TaxableAmount = new BaseCurrency()
-                         {
-                             CurrencyID = "TRY",
-                             Value = 100m
-                         },
-                         TaxAmount = new BaseCurrency()
-                         {
-                             CurrencyID = "TRY",
-                             Value = 18m
-                         },
-                         Percent = 18m,
-                         TaxCategory = new TaxCategory()
-                         {
-                             TaxScheme = new TaxScheme()
-                             {
-                                 Name = "KDV",
-                                 TaxTypeCode = "0015"
-                             }
-                         }
-                     },
-                     new TaxSubtotal()
-                     {
-                          CalculationSequenceNumeric = 2,
-                         TaxableAmount = new BaseCurrency()
-                         {
-                             CurrencyID = "TRY",
-                             Value = 100m
-                         },
-                         TaxAmount = new BaseCurrency()
-                         {
-                             CurrencyID = "TRY",
-                             Value = 20m
-                         },
-                         Percent = 20m,
-                         TaxCategory = new TaxCategory()
-                         {
-                             TaxScheme = new TaxScheme()
-                             {
-                                 Name = "GV Stopaj",
-                                 TaxTypeCode = "0003"
-                             }
-                         }
-                     }
-                },
-            },           
-            Item = new Item()
-            {
-                Name = "hizmet"
-            }
-        }
-    }
-};
-
-
-var text = Directory.GetCurrentDirectory();
-//using (StreamReader reader = new StreamReader(text))
-//{
-//    string result = reader.ReadToEnd();
-//}
-
-var client = new RestClient("https://apitest.nilvera.com/einvoice/Send/Xml?Alias=urn:mail:defaultpk@ayca.com");
-//client.Timeout = -1;
-var request = new RestRequest(text, Method.Post);
+var client = new RestClient();
+var request = new RestRequest("https://apitest.nilvera.com/einvoice/Send/Xml?Alias=urn:mail:defaultpk@ayca.com", Method.Post);
+request.AddHeader("Authorization", "Bearer 8AB2B31C36CD88AC20F244C3AD5578E9CD31FAB9E07F6B3D42709172B4E54638");
+request.AddFile("file", "C:\\Users\\Tunahan\\Downloads\\AYCA.xml", "application/xml");
 request.AddHeader("Content-Type", "multipart/form-data");
-request.AddHeader("Accept", "text/plain");
-request.AddHeader("Authorization", "Bearer 9F9FFF28D59C0B99019C66F322BC1C2350F3D25174C99052B9DCFA3956AAA66B");
-request.AddFile("deneme", text);
-var response = client.Execute(request);
+var response =await client.ExecuteAsync(request);
 Console.WriteLine(response.Content);
+Console.ReadLine();
 
+
+
+
+//var client = new RestClient();
+//var request = new RestRequest("https://apitest.nilvera.com/einvoice/Send/Xml?Alias=<alicipostakutusuetiketi>", Method.Post); 
+//request.AddHeader("Authorization", "Bearer <API Key>");     //Portaldan aldığınız API KEY giriniz.
+//request.AddFile("file", "/path/to/file", "application/xml");   // "/path/to/file" XML'in path giriniz.
+//request.AddHeader("Content-Type", "multipart/form-data");
+//var response = await client.ExecuteAsync(request);
+//Console.WriteLine(response);
+
+
+
+
+
+
+
+
+//var url = "https://apitest.nilvera.com/einvoice/Send/Model";
+//var client = new RestClient(url);
+//var request = new RestRequest(url,Method.Post);
+//request.AddHeader("Authorization", "Bearer 8AB2B31C36CD88AC20F244C3AD5578E9CD31FAB9E07F6B3D42709172B4E54638");
+//request.AddHeader("Content-Type", "application/json");
+//var body = @"{
+//  ""EInvoice"": {
+//    ""InvoiceInfo"": {
+//      ""UUID"": ""cf2f0db6-8b1c-47b6-b818-a2a254b1740c"",
+//      ""TemplateUUID"": ""1bff418a-58fc-41e3-a241-576d131c06d5"",
+//      ""TemplateBase64String"": null,
+//      ""InvoiceType"": ""SATIS"",
+//      ""InvoiceSerieOrNumber"": ""EFT"",
+//      ""IssueDate"": ""2023-01-10T10:02:38.1855254+03:00"",
+//      ""CurrencyCode"": ""TRY"",
+//      ""ExchangeRate"": null,
+//      ""InvoiceProfile"": ""TICARIFATURA"",
+//      ""DespatchDocumentReference"": null,
+//      ""OrderReference"": null,
+//      ""OrderReferenceDocument"": null,
+//      ""AdditionalDocumentReferences"": null,
+//      ""TaxExemptionReasonInfo"": null,
+//      ""PaymentTermsInfo"": null,
+//      ""PaymentMeansInfo"": null,
+//      ""OKCInfo"": null,
+//      ""ReturnInvoiceInfo"": null,
+//      ""AccountingCost"": null,
+//      ""InvoicePeriod"": null,
+//      ""SGKInfo"": null,
+//      ""Expenses"": null,
+//      ""LineExtensionAmount"": 0,
+//      ""GeneralKDV1Total"": 0,
+//      ""GeneralKDV8Total"": 0,
+//      ""GeneralKDV18Total"": 0,
+//      ""GeneralAllowanceTotal"": 0,
+//      ""PayableAmount"": 0,
+//      ""KdvTotal"": 0
+//    },
+//    ""CompanyInfo"": {
+//      ""TaxNumber"": ""57223294532"",
+//      ""Name"": ""Ayça Türkmen"",
+//      ""TaxOffice"": ""Erciyes"",
+//      ""PartyIdentifications"": null,
+//      ""AgentPartyIdentifications"": null,
+//      ""Address"": ""Adres"",
+//      ""District"": ""Melikgazi"",
+//      ""City"": ""Kayseri"",
+//      ""Country"": ""Türkiye"",
+//      ""PostalCode"": ""38038"",
+//      ""Phone"": ""08502514010"",
+//      ""Fax"": null,
+//      ""Mail"": ""info@nilvera.com"",
+//      ""WebSite"": ""htts://nilvera.com""
+//    },
+//    ""CustomerInfo"": {
+//      ""TaxNumber"": ""57223294532"",
+//      ""Name"": ""Ayça Türkmen"",
+//      ""TaxOffice"": null,
+//      ""PartyIdentifications"": null,
+//      ""AgentPartyIdentifications"": null,
+//      ""Address"": ""Papatya Caddesi Yasemin Sokak No21"",
+//      ""District"": ""Melikgazi"",
+//      ""City"": ""Kayseri"",
+//      ""Country"": ""Türkiye"",
+//      ""PostalCode"": ""38038"",
+//      ""Phone"": null,
+//      ""Fax"": null,
+//      ""Mail"": null,
+//      ""WebSite"": null
+//    },
+//    ""BuyerCustomerInfo"": null,
+//    ""ExportCustomerInfo"": null,
+//    ""TaxFreeInfo"": null,
+//    ""InvoiceLines"": [
+//      {
+//        ""Index"": null,
+//        ""SellerCode"": null,
+//        ""BuyerCode"": null,
+//        ""Name"": ""Laptop"",
+//        ""Description"": null,
+//        ""Quantity"": 1,
+//        ""UnitType"": ""C62"",
+//        ""Price"": 100,
+//        ""AllowanceTotal"": 0,
+//        ""KDVPercent"": 18,
+//        ""KDVTotal"": 0,
+//        ""Taxes"": null,
+//        ""DeliveryInfo"": null,
+//        ""ManufacturerCode"": null,
+//        ""BrandName"": null,
+//        ""ModelName"": null,
+//        ""Note"": null,
+//        ""OzelMatrahReason"": null,
+//        ""OzelMatrahTotal"": null,
+//        ""AdditionalItemIdentification"": null
+//      }
+//    ],
+//    ""Notes"": [
+//      ""Note 1"",
+//      ""Note 2""
+//    ]
+//  },
+//  ""CustomerAlias"": ""urn:mail:defaultpk@ayca.com""
+//}}";
+//request.AddParameter("application/json", body, ParameterType.RequestBody);
+//var response = client.ExecuteAsync(request);
+//Console.WriteLine(response);
 
 
