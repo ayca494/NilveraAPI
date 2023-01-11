@@ -8,8 +8,8 @@ namespace NilveraAPI.Enums
 {
     public enum InvoiceType
     {
-        SATIS,
-        IADE,
+        SATIS ,
+        IADE ,
         ISTISNA,
         TEVKIFAT,
         IHRACKAYITLI,
@@ -18,6 +18,8 @@ namespace NilveraAPI.Enums
         SGK,
         TEVKIFATIADE,
         KOMISYONCU,
+        HKSSATIS,
+        HKSKOMISYONCU,
         KONAKLAMAVERGISI
     }
 }
