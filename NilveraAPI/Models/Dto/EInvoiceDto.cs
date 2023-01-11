@@ -17,6 +17,6 @@ namespace NilveraAPI.Models.Dto
         public TaxFreeInfoDto TaxFreeInfo { get; set; }
         public List<EInvoiceLineDto> InvoiceLines { get; set; }
         public List<string> Notes { get; set; }
-
+       
     }
 }
