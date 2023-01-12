@@ -10,6 +10,5 @@ namespace NilveraAPI.Models
     public class ArchiveInvoiceModel
     {
         public ArchiveInvoiceDto ArchiveInvoice { get; set; }
-        public string CustomerAlias { get; set; }
     }
 }

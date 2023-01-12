@@ -168,101 +168,186 @@ using System.Xml.Serialization;
 
 
 #region E-Arşiv Model olarak gönderir.
-ArchiveInvoiceModel archiveInvoiceModel = new ArchiveInvoiceModel()
-{
-    ArchiveInvoice = new ArchiveInvoiceDto()
-    {
-        CompanyInfo = new PartyInfoDto()
-        {
-            TaxNumber = "6310540565",
-            Name = "NİLVERA YAZILIM VE BİLİŞİM HİZMETLERİ TİCARET LİMİTED ŞİRKETİ",
-            TaxOffice = "",
-            PartyIdentifications = new List<NilveraAPI.Models.Dto.Shared.IDTypeDto>()
-            {
-            new NilveraAPI.Models.Dto.Shared.IDTypeDto()
-            {
-                SchemeID = "MERSISNO",
-                Value = "1122334455667788 "
-            },
-            new NilveraAPI.Models.Dto.Shared.IDTypeDto()
-            {
-                SchemeID = "TICARETSICILNO",
-                Value = "12345"
-            }},
-            Address = "adres",
-            District = "Melikgazi",
-            City = "Kayseri",
-            Country = "Türkiye",
-            PostalCode = "",
-            Phone = "",
-            Fax = "12345",
-            Mail = "",
-            WebSite = ""
-        },
-        CustomerInfo = new PartyInfoDto()
-        {
-            TaxOffice = "Melikgazi",
-            Address = "Sahabiye Mahallesi Bor Sok. Soylu İş Merkz. No:10",
-            District = "Kocasinan",
-            City = "Kayseri",
-            Country = "Türkiye",
-            Fax = "",
-            Name = "MOHAMMAD ALAJATI",
-            PartyIdentifications = new List<IDTypeDto>(),
-            Phone = "",
-            PostalCode = "",
-            TaxNumber = "99347391094",
-            WebSite = ""
-        },
-        InvoiceInfo = new ArchiveInvoiceInfoDto()
-        {
-            TaxExemptionReasonInfo = new TaxExemptionReasonInfoDto(),
-            UUID = Guid.Parse("3fa85f64-5717-4562-b3fc-2c963f66afa6"),
-            TemplateUUID = Guid.Parse("72813487-e592-4758-87da-be08ed199197"),
-            InvoiceType = NilveraAPI.Enums.InvoiceType.SATIS,
-            InvoiceSerieOrNumber = "NIL",
-            IssueDate = DateTime.Parse("2023-01-11T12:16:07.732Z"),
-            CurrencyCode = "TRY",
-            ExchangeRate = 1
-            //Expenses = new List<ExpensesDto>()
-            //            {
-            //                new ExpensesDto()
-            //                {
-            //                    Amount = 12,
-            //                    ExpenseType = NilveraAPI.Enums.ExpenseType.HKSKOMISYON
-            //                }
-            //            }
-        },
-        InvoiceLines = new List<EArchiveInvoiceLineDto>()
-                    {
-                        new EArchiveInvoiceLineDto()
-                        {
-                            Name = "Deneme",
-                            Price = 12,
-                            Quantity = 125,
-                            UnitType = "C62",
-                            AllowanceTotal = 195,
-                            KDVPercent = 18,
-                            AdditionalItemIdentification = new AdditionalItemIdentificationDto()
-                            {
-                                TagNumber = "1231231231231231231",
-                                OwnerName = "deneme",
-                                OwnerTaxNumber = "22040521512"
-                            }
-                        }
-                    }
-    }
-};
+//ArchiveInvoiceModel archiveInvoiceModel = new ArchiveInvoiceModel()
+//{
+//    ArchiveInvoice = new ArchiveInvoiceDto()
+//    {
+//        CompanyInfo = new PartyInfoDto()
+//        {
+//            TaxNumber = "6310540565",
+//            Name = "NİLVERA YAZILIM VE BİLİŞİM HİZMETLERİ TİCARET LİMİTED ŞİRKETİ",
+//            TaxOffice = "",
+//            PartyIdentifications = new List<NilveraAPI.Models.Dto.Shared.IDTypeDto>()
+//            {
+//                new NilveraAPI.Models.Dto.Shared.IDTypeDto()
+//                {
+//                    SchemeID = "MERSISNO",
+//                    Value = "1122334455667788 "
+//                },
+//                new NilveraAPI.Models.Dto.Shared.IDTypeDto()
+//                {
+//                    SchemeID = "TICARETSICILNO",
+//                    Value = "12345"
+//                }
+//            },
+//            Address = "adres",
+//            District = "Melikgazi",
+//            City = "Kayseri",
+//            Country = "Türkiye",
+//            PostalCode = "",
+//            Phone = "",
+//            Fax = "12345",
+//            Mail = "",
+//            WebSite = ""
+//        },
+//        CustomerInfo = new PartyInfoDto()
+//        {
+//            TaxOffice = "Melikgazi",
+//            Address = "Sahabiye Mahallesi Bor Sok. Soylu İş Merkz. No:10",
+//            District = "Kocasinan",
+//            City = "Kayseri",
+//            Country = "Türkiye",
+//            Fax = "",
+//            Name = "MOHAMMAD ALAJATI",
+//            PartyIdentifications = new List<IDTypeDto>(),
+//            Phone = "",
+//            PostalCode = "",
+//            TaxNumber = "99347391094",
+//            WebSite = ""
+//        },
+//        InvoiceInfo = new ArchiveInvoiceInfoDto()
+//        {
+//            UUID = Guid.Parse("2fa85f64-5717-4562-b3fc-2c963f66afa6"),
+//            TemplateUUID = Guid.Parse("72813487-e592-4758-87da-be08ed199197"),
+//            InvoiceType = NilveraAPI.Enums.InvoiceType.SATIS,
+//            InvoiceSerieOrNumber = "NIL",
+//            IssueDate = DateTime.Parse("2023-01-12T12:16:07.732Z"),
+//            CurrencyCode = "TRY",
+//            ExchangeRate = 1,
+//            Expenses = new List<ExpensesDto>()
+//                        {
+//                            new ExpensesDto()
+//                            {
+//                                Amount = 12,
+//                                ExpenseType = NilveraAPI.Enums.ExpenseType.HKSKOMISYON
+//                            }
+//                        },
+//            SendType= SendType.KAGIT,
+//            SalesPlatform=SalesPlatform.NORMAL
+//        },
+//        InvoiceLines = new List<EArchiveInvoiceLineDto>()
+//                    {
+//                        new EArchiveInvoiceLineDto()
+//                        {
+//                            Name = "Deneme",
+//                            Price = 12,
+//                            Quantity = 125,
+//                            UnitType = "C62",
+//                            AllowanceTotal = 195,
+//                            KDVPercent = 18,
+//                            AdditionalItemIdentification = new AdditionalItemIdentificationDto()
+//                            {
+//                                TagNumber = "1231231231231231231",
+//                                OwnerName = "deneme",
+//                                OwnerTaxNumber = "22040521512"
+//                            }
+//                        }
+//                    }
+//    }
+//};
 
-var client = new RestClient();
-var request = new RestRequest("https://apitest.nilvera.com/earchive/Send/Model", Method.Post);
-request.AddHeader("Authorization", "Bearer 9F9FFF28D59C0B99019C66F322BC1C2350F3D25174C99052B9DCFA3956AAA66B");
-request.AddJsonBody(archiveInvoiceModel);
-request.AddHeader("Content-Type", "application/json");
-request.AddHeader("Accept", "application/json");
-var response = await client.ExecuteAsync(request);
-Console.WriteLine(response.Content);
-Console.ReadLine();
+//ArchiveInvoiceModel archiveInvoiceDto = new()
+//{
+//    ArchiveInvoice = new ArchiveInvoiceDto()
+//    {
+//        CompanyInfo = new PartyInfoDto()
+//        {
+//            Address = "",
+//            City = "",
+//            Country = "",
+//            District = "",
+//            Fax = "",
+//            Name = "         dasda dasdada      ",
+//            PartyIdentifications = new List<IDTypeDto>(),
+//            Phone = "",
+//            PostalCode = "",
+//            TaxNumber = "1234567890",
+//            TaxOffice = "",
+//            WebSite = ""
+//        },
+//        CustomerInfo = new PartyInfoDto()
+//        {
+//            Address = "",
+//            City = "",
+//            Country = "",
+//            District = "",
+//            Fax = "",
+//            Name = "         dasda dasdada      ",
+//            PartyIdentifications = new List<IDTypeDto>(),
+//            Phone = "",
+//            PostalCode = "",
+//            TaxNumber = "1234567890",
+//            TaxOffice = "",
+//            WebSite = ""
+//        },
+//        InvoiceInfo = new ArchiveInvoiceInfoDto()
+//        {
+//            TaxExemptionReasonInfo = new TaxExemptionReasonInfoDto(),
+//            InvoiceType = NilveraAPI.Enums.InvoiceType.HKSSATIS,
+//            CurrencyCode = "TRY",
+//            Expenses = new List<ExpensesDto>()
+//                    {
+//                        new ExpensesDto()
+//                        {
+//                            Amount = 12,
+//                            ExpenseType = NilveraAPI.Enums.ExpenseType.HKSKOMISYON
+//                        }
+//                    }
+//        },
+//        InvoiceLines = new List<EArchiveInvoiceLineDto>()
+//                {
+//                    new EArchiveInvoiceLineDto()
+//                    {
+//                        Name = "Deneme",
+//                        Price = 12,
+//                        Quantity = 125,
+//                        UnitType = "C62",
+//                        AllowanceTotal = 195,
+//                        KDVPercent = 18,
+//                        AdditionalItemIdentification = new AdditionalItemIdentificationDto()
+//                        {
+//                            TagNumber = "1231231231231231231",
+//                            OwnerName = "deneme",
+//                            OwnerTaxNumber = "22040521512"
+//                        },
+//                    }
+//                },
+//        Notes = new List<string>()
+//    }
+//};
+
+//var client = new RestClient();
+//var request = new RestRequest("https://apitest.nilvera.com/earchive/Send/Model", Method.Post);
+//request.AddHeader("Authorization", "Bearer 9F9FFF28D59C0B99019C66F322BC1C2350F3D25174C99052B9DCFA3956AAA66B");
+//request.AddJsonBody(archiveInvoiceModel);
+//request.AddHeader("Content-Type", "application/json");
+//request.AddHeader("Accept", "application/json");
+//var response = await client.ExecuteAsync(request);
+//Console.WriteLine(response.Content);
+//Console.ReadLine();
 
 #endregion
+
+
+#region E-Arşiv Xml olarak gönderir.
+//var client = new RestClient();
+//var request = new RestRequest("https://apitest.nilvera.com/earchive/Send/Xml?Alias=urn:mail:defaultpk@nilvera.com", Method.Post);
+//request.AddHeader("Authorization", "Bearer 9F9FFF28D59C0B99019C66F322BC1C2350F3D25174C99052B9DCFA3956AAA66B");     //Portaldan aldığınız API KEY giriniz.
+//request.AddHeader("Content-Type", "multipart/form-data");
+//request.AddFile("file", "C:\\Users\\Tunahan\\Downloads\\MOHAMMAD ALAJATI-NIL.xml", "application/xml");   // "/path/to/file" XML'in path giriniz.
+//var response = await client.ExecuteAsync(request);
+//Console.WriteLine(response.Content);
+//Console.ReadLine();
+#endregion
+
 
