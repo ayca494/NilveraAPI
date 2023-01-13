@@ -16,7 +16,7 @@ using System.Net;
 using System.Numerics;
 using System.Xml.Linq;
 using System.Xml.Serialization;
-
+using System.Text;
 
 #region Faturayı Model olarak gönderir.
 //EInvoiceModel eInvoiceModel = new EInvoiceModel()
@@ -72,7 +72,7 @@ using System.Xml.Serialization;
 //        },
 //        InvoiceInfo = new NilveraAPI.Models.Dto.Shared.InvoiceInfoDto()
 //        {
-//            UUID = Guid.Parse("3247a513-066c-493e-b817-c33e6a7ab04b"),
+//            UUID = Guid.Parse("3247a513-066c-493e-b817-c33e6a7ab03b"),
 //            TemplateUUID = Guid.Parse("4e482e2c-da6b-4c4b-b834-4dd444915c78"),
 //            InvoiceProfile = NilveraAPI.Enums.InvoiceProfile.TEMELFATURA,
 //            InvoiceType = NilveraAPI.Enums.InvoiceType.SATIS,
@@ -340,14 +340,14 @@ using System.Xml.Serialization;
 
 
 #region E-Arşiv Xml olarak gönderir.
-//var client = new RestClient();
-//var request = new RestRequest("https://apitest.nilvera.com/earchive/Send/Xml?Alias=urn:mail:defaultpk@nilvera.com", Method.Post);
-//request.AddHeader("Authorization", "Bearer 9F9FFF28D59C0B99019C66F322BC1C2350F3D25174C99052B9DCFA3956AAA66B");     //Portaldan aldığınız API KEY giriniz.
-//request.AddHeader("Content-Type", "multipart/form-data");
-//request.AddFile("file", "C:\\Users\\Tunahan\\Downloads\\MOHAMMAD ALAJATI-NIL.xml", "application/xml");   // "/path/to/file" XML'in path giriniz.
-//var response = await client.ExecuteAsync(request);
-//Console.WriteLine(response.Content);
-//Console.ReadLine();
+var client = new RestClient();
+var request = new RestRequest("https://apitest.nilvera.com/earchive/Send/Xml?Alias=urn:mail:defaultpk@nilvera.com", Method.Post);
+request.AddHeader("Authorization", "Bearer 9F9FFF28D59C0B99019C66F322BC1C2350F3D25174C99052B9DCFA3956AAA66B");     //Portaldan aldığınız API KEY giriniz.
+request.AddHeader("Content-Type", "multipart/form-data");
+request.AddFile("file", "C:\\Users\\Tunahan\\Downloads\\MOHAMMAD ALAJATI-NIL.xml", "application/xml");   // "/path/to/file" XML'in path giriniz.
+var response = await client.ExecuteAsync(request);
+Console.WriteLine(response.Content);
+Console.ReadLine();
 #endregion
 
 
