@@ -17,6 +17,8 @@ using System.Numerics;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 using System.Text;
+using NilveraAPI.Models.UblModels.Invoice;
+using NilveraAPI.Models.UblModels.Shared;
 
 #region Faturayı Model olarak gönderir.
 //EInvoiceModel eInvoiceModel = new EInvoiceModel()
@@ -340,14 +342,344 @@ using System.Text;
 
 
 #region E-Arşiv Xml olarak gönderir.
-var client = new RestClient();
-var request = new RestRequest("https://apitest.nilvera.com/earchive/Send/Xml?Alias=urn:mail:defaultpk@nilvera.com", Method.Post);
-request.AddHeader("Authorization", "Bearer 9F9FFF28D59C0B99019C66F322BC1C2350F3D25174C99052B9DCFA3956AAA66B");     //Portaldan aldığınız API KEY giriniz.
-request.AddHeader("Content-Type", "multipart/form-data");
-request.AddFile("file", "C:\\Users\\Tunahan\\Downloads\\MOHAMMAD ALAJATI-NIL.xml", "application/xml");   // "/path/to/file" XML'in path giriniz.
-var response = await client.ExecuteAsync(request);
-Console.WriteLine(response.Content);
-Console.ReadLine();
+//var client = new RestClient();
+//var request = new RestRequest("https://apitest.nilvera.com/earchive/Send/Xml?Alias=urn:mail:defaultpk@nilvera.com", Method.Post);
+//request.AddHeader("Authorization", "Bearer 9F9FFF28D59C0B99019C66F322BC1C2350F3D25174C99052B9DCFA3956AAA66B");     //Portaldan aldığınız API KEY giriniz.
+//request.AddHeader("Content-Type", "multipart/form-data");
+//request.AddFile("file", "C:\\Users\\Tunahan\\Downloads\\MOHAMMAD ALAJATI-NIL.xml", "application/xml");   // "/path/to/file" XML'in path giriniz.
+//var response = await client.ExecuteAsync(request);
+//Console.WriteLine(response.Content);
+//Console.ReadLine();
 #endregion
 
+
+string basePath = AppDomain.CurrentDomain.BaseDirectory;
+string filePath = Path.Combine(basePath + "ca747ee5-9c0d-4410-9378-02bc4a5e31fa.xslt");
+
+
+
+
+if (!File.Exists(filePath))
+{
+    if (!Directory.Exists(basePath))
+        Directory.CreateDirectory(basePath);
+}
+var templateBytes = File.ReadAllBytes(filePath);
+var templateBytes2 = File.ReadAllText(filePath);
+
+var template = System.Convert.ToBase64String(Encoding.UTF8.GetBytes(templateBytes2.Substring(templateBytes2.IndexOf("<"))));
+
+
+UblInvoice ublInvoice = new UblInvoice()
+{
+    ID = "MTT2023000000003",
+    InvoiceTypeCode = "SATIS",
+    IssueDate = "2023-01-14",
+    IssueTime = "10:20:10",
+    ProfileID = "TICARIFATURA",
+    UUID = "5b0a789b-1ec6-4e5a-911f-139c59985429",
+    AccountingCustomerParty = new CustomerParty()
+    {
+        Party = new Party()
+        {
+            Contact = new Contact()
+            {
+                ElectronicMail = "kayseri@gmail.com",
+                Telephone = "02223334455",
+                Telefax = "12344"
+            },
+            PostalAddress = new Address()
+            {
+                Country = new Country() { Name = "Türkiye" },
+                CityName = "Kayseri",
+                CitySubdivisionName = "Talas",
+                StreetName = "Teknopark"
+            },
+            PartyName = new PartyName()
+            {
+                Name = "NİLVERA YAZILIM VE BİLİŞİM HİZMETLERİ TİCARET LİMİTED ŞİRKETİ"
+            },
+            PartyIdentification = new List<PartyIdentification>()
+            {
+                new PartyIdentification()
+                {
+                    ID = new IDType() { Id = "6310540565", SchemeId = "VKN" }
+                }
+            }
+        }
+    },
+    AccountingSupplierParty = new SupplierParty()
+    {
+        Party = new Party()
+        {
+            Contact = new Contact()
+            {
+                ElectronicMail = "kayseri@gmail.com",
+                Telephone = "02223334455",
+                Telefax = "12344"
+            },
+            PostalAddress = new Address()
+            {
+                Country = new Country() { Name = "Türkiye" },
+                CityName = "Kayseri",
+                CitySubdivisionName = "Talas",
+                StreetName = "Teknopark"
+            },
+            PartyName = new PartyName()
+            {
+                Name = "NİLVERA YAZILIM VE BİLİŞİM HİZMETLERİ TİCARET LİMİTED ŞİRKETİ"
+            },
+            PartyIdentification = new List<PartyIdentification>()
+            {
+                new PartyIdentification()
+                {
+                    ID = new IDType() { Id = "6310540565", SchemeId = "VKN" }
+                }
+            }
+        }
+    },
+    AllowanceCharge = new List<AllowanceCharge>()
+    {
+        new AllowanceCharge()
+        {
+            Amount = new BaseCurrency()
+            {
+                CurrencyID = "TRY",
+                Value = 5
+            },
+            ChargeIndicator = false
+        }
+    },
+    DocumentCurrencyCode = new DocumentCurrencyCode()
+    {
+        Name = "TRY"
+    },
+    InvoiceLines = new List<InvoiceLine>()
+    {
+        new InvoiceLine()
+        {
+            AllowanceCharge = new List<AllowanceCharge>()
+            {
+                new AllowanceCharge()
+                {
+                    Amount = new BaseCurrency() { CurrencyID = "TRY", Value = 5 },
+                    BaseAmount = new BaseCurrency() { CurrencyID = "TRY", Value = 100 },
+                    MultiplierFactorNumeric = "0.05",
+                    ChargeIndicator = false
+                }
+            },
+            ID = new IDType() { Id = "1" },
+            InvoicedQuantity = new BaseUnit()
+            {
+                UnitCode = "C62",
+                Value = 1
+            },
+            Item = new Item()
+            {
+                Name = "Ürün"
+            },
+            LineExtensionAmount = new BaseCurrency()
+            {
+                CurrencyID = "TRY",
+                Value = 95
+            },
+            Price = new Price()
+            {
+                PriceAmount = new BaseCurrency()
+                {
+                    CurrencyID = "TRY",
+                    Value = 100
+                }
+            },
+            TaxTotal = new TaxTotal()
+            {
+                TaxAmount = new BaseCurrency()
+                {
+                    CurrencyID = "TRY",
+                    Value = (Decimal)17.1
+                },
+                TaxSubtotals = new List<TaxSubtotal>()
+                {
+                    new TaxSubtotal()
+                    {
+                        Percent = 18,
+                        TaxableAmount = new BaseCurrency()
+                        {
+                            CurrencyID = "TRY",
+                            Value = 95
+                        },
+                        CalculationSequenceNumeric = 1,
+                        TaxAmount = new BaseCurrency()
+                        {
+                            CurrencyID = "TRY",
+                            Value = (decimal)17.1
+                        },
+                        TaxCategory = new TaxCategory()
+                        {
+                            TaxScheme = new TaxScheme()
+                            {
+                                Name = "KDV",
+                                TaxTypeCode = "0015"
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+    },
+    LegalMonetaryTotal = new MonetaryTotal()
+    {
+        AllowanceTotalAmount = new BaseCurrency()
+        {
+            CurrencyID = "TRY",
+            Value = 5
+        },
+        LineExtensionAmount = new BaseCurrency()
+        {
+            CurrencyID = "TRY",
+            Value = 100
+        },
+        PayableAmount = new BaseCurrency()
+        {
+            CurrencyID = "TRY",
+            Value = (decimal)112.1
+        },
+        TaxExclusiveAmount = new BaseCurrency()
+        {
+            CurrencyID = "TRY",
+            Value = 95
+        },
+        TaxInclusiveAmount = new BaseCurrency()
+        {
+            CurrencyID = "TRY",
+            Value = (decimal)112.1
+        }
+    },
+    LineCountNumeric = 1,
+    Notes = new List<string>()
+    {
+        "YALNIZ : YÜZONİKİ TL ON Kr."
+    },
+    Signatures = new List<CustomSignature>()
+    {
+        new CustomSignature()
+        {
+            DigitalSignatureAttachment = new Attachment()
+            {
+                ExternalReference = new ExternalReference()
+                {
+                    URI = "#Signature_MTT2023000000003"
+                }
+            },
+            ID = new IDType()
+            {
+                Id = "6310540565",
+                SchemeId = "VKN_TCKN"
+            },
+            SignatoryParty = new Party()
+            {
+                PartyIdentification = new List<PartyIdentification>()
+                {
+                    new PartyIdentification()
+                    {
+                        ID = new IDType()
+                        {
+                            Id = "6310540565",
+                            SchemeId = "VKN"
+                        }
+                    }
+                },
+                PartyName = new PartyName()
+                {
+                    Name = "NİLVERA YAZILIM VE BİLİŞİM HİZMETLERİ TİCARET LİMİTED ŞİRKETİ"
+                },
+                PartyTaxScheme = new PartyTaxScheme()
+                {
+                    TaxScheme = new TaxScheme()
+                    {
+                        Name = "ERCİYES"
+                    }
+                },
+                PostalAddress = new Address()
+                {
+                    Country = new Country() { IdentificationCode = "TR", Name = "Türkiye" },
+                    CityName = "Kayseri",
+                    CitySubdivisionName = "Melikgazi",
+                    StreetName = "Yıldırım Beyazıt Mh. Aşık Veysel Blv.",
+                    BuildingName = "Erciyes Teknopark 3",
+                    BuildingNumber = "67",
+                    PostalZone = "38030"
+                },
+                WebSiteURI = "http://www.nilvera.com"
+            },
+        }
+    },
+    TaxTotals = new List<TaxTotal>()
+    {
+        new TaxTotal()
+        {
+            TaxAmount = new BaseCurrency()
+            {
+                CurrencyID = "TRY",
+                Value = (decimal)17.1
+            },
+            TaxSubtotals = new List<TaxSubtotal>()
+            {
+                new TaxSubtotal()
+                {
+                    CalculationSequenceNumeric = 1,
+                    Percent = 18,
+                    TaxAmount = new BaseCurrency()
+                    {
+                        CurrencyID = "TRY",
+                        Value = (decimal)17.1
+                    },
+                    TaxableAmount = new BaseCurrency()
+                    {
+                        CurrencyID = "TRY",
+                        Value = 95
+                    },
+                    TaxCategory = new TaxCategory()
+                    {
+                        TaxScheme = new TaxScheme()
+                        {
+                            Name = "KDV",
+                            TaxTypeCode = "0015"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    AdditionalDocumentReferences = new List<DocumentReference>()
+    {
+        new DocumentReference()
+        {
+            DocumentType = "XSLT",
+            DocumentDescription = "E-Fatura stil dosyası.",
+            ID = new IDType() { Id = "ca747ee5-9c0d-4410-9378-02bc4a5e31fa" },
+            IssueDate = "2023-01-01",
+            Attachment = new Attachment()
+            {
+                EmbeddedDocumentBinaryObject = new EmbeddedDocumentBinaryObject()
+                {
+                    CharacterSetCode = "UTF-8",
+                    EncodingCode = "Base64",
+                    Filename = "ca747ee5-9c0d-4410-9378-02bc4a5e31fa.xslt",
+                    MimeCode = "application/xml",
+                    Name = template
+                }
+            }
+        }
+    }
+
+
+};
+
+
+
+UblInvoiceSerializer ublInvoiceSerializer = new UblInvoiceSerializer();
+Console.WriteLine( await ublInvoiceSerializer.SerializeAsync(ublInvoice, ublInvoiceSerializer.xmlns));
+Console.ReadLine();
 
