@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  nilveraapi:
+    image: ${DOCKER_REGISTRY-}nilveraapi
+    build:
+      context: .
+      dockerfile: NilveraAPI/Dockerfile
