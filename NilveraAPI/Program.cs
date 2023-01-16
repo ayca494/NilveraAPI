@@ -47,21 +47,21 @@ using NilveraAPI.Models.UblModels.Shared;
 //            TaxNumber = "6310540565",
 //            TaxOffice = "kayseri vergi dairesi",
 //            PartyIdentifications = new List<NilveraAPI.Models.Dto.Shared.IDTypeDto>()
-//        {
-//                        new NilveraAPI.Models.Dto.Shared.IDTypeDto()
-//                        {
-//                            SchemeID = "TICARETSICILNO",
-//                            Value = "213123"
-//                        }
-//                    },
+//            {
+//                new NilveraAPI.Models.Dto.Shared.IDTypeDto()
+//                {
+//                     SchemeID = "TICARETSICILNO",
+//                     Value = "213123"
+//                }
+//            },
 //            AgentPartyIdentifications = new List<NilveraAPI.Models.Dto.Shared.IDTypeDto>()
-//        {
-//                        new NilveraAPI.Models.Dto.Shared.IDTypeDto()
-//                        {
-//                            SchemeID = "DISTRIBUTORNO",
-//                            Value = "2112"
-//                        }
-//                    },
+//            {
+//                new NilveraAPI.Models.Dto.Shared.IDTypeDto()
+//                {
+//                     SchemeID = "DISTRIBUTORNO",
+//                     Value = "2112"
+//                }
+//            },
 //            Address = "Yıldırım Beyazıt Mah. Aşıkveysel Bulvarı Erciyes Teknopark Binası 3",
 //            District = "Talas",
 //            City = "Kayseri",
@@ -74,14 +74,14 @@ using NilveraAPI.Models.UblModels.Shared;
 //        },
 //        InvoiceInfo = new NilveraAPI.Models.Dto.Shared.InvoiceInfoDto()
 //        {
-//            UUID = Guid.Parse("3247a513-066c-493e-b817-c33e6a7ab03b"),
+//            UUID = Guid.Parse(Guid.NewGuid().ToString().ToLower()),
 //            TemplateUUID = Guid.Parse("4e482e2c-da6b-4c4b-b834-4dd444915c78"),
 //            InvoiceProfile = NilveraAPI.Enums.InvoiceProfile.TEMELFATURA,
 //            InvoiceType = NilveraAPI.Enums.InvoiceType.SATIS,
 //            InvoiceSerieOrNumber = "BPU",
-//            IssueDate = DateTime.Now.ToString("yyyy-MM-dd"),
+//            IssueDate = DateTime.Now,
 //            CurrencyCode = "TRY",
-//            ExchangeRate = null,
+//            ExchangeRate = 1,
 //            DespatchDocumentReference = new List<NilveraAPI.Models.Dto.Shared.KeyValueDto>(),
 //            OrderReference = null,
 //            OrderReferenceDocument = null,
@@ -104,43 +104,43 @@ using NilveraAPI.Models.UblModels.Shared;
 //            Expenses = new List<NilveraAPI.Models.Dto.Shared.ExpensesDto>()
 //        },
 //        InvoiceLines = new List<NilveraAPI.Models.Dto.Shared.EInvoiceLineDto>()
-//    {
-//                    new NilveraAPI.Models.Dto.Shared.EInvoiceLineDto(){
-//                        SellerCode = "",
-//                        BuyerCode = "",
-//                        Name = "Kalem",
-//                        Description = "",
-//                        Quantity = 1,
-//                        UnitType = "C62",
-//                        Price = 500,
-//                        AllowanceTotal = 0M,
-//                        KDVPercent = 18M,
-//                        KDVTotal = 0M,
-//                        Taxes = new List<NilveraAPI.Models.Dto.Shared.TaxDto>()
-//                        {
-//                            new NilveraAPI.Models.Dto.Shared.TaxDto()
-//                            {
-//                                Percent = 0,
-//                                Total = 0,
-//                                TaxCode = ""
-//                            }
-//                        },
-//                        ManufacturerCode = "",
-//                        BrandName = "",
-//                        ModelName = "",
-//                        Note = "",
-//                        OzelMatrahReason = null,
-//                        OzelMatrahTotal = null,
-//                        AdditionalItemIdentification = new NilveraAPI.Models.Dto.Shared.AdditionalItemIdentificationDto()
-//                    },
-//                },
-//        Notes = new List<string>()
+//        {
+//            new NilveraAPI.Models.Dto.Shared.EInvoiceLineDto(){
+//                SellerCode = "",
+//                BuyerCode = "",
+//                Name = "Kalem",
+//                Description = "",
+//                Quantity = 1,
+//                UnitType = "C62",
+//                Price = 500,
+//                AllowanceTotal = 0M,
+//                KDVPercent = 18M,
+//                KDVTotal = 0M,
+//                Taxes = new List<NilveraAPI.Models.Dto.Shared.TaxDto>()
 //                {
-//                    "Bu",
-//                    "bir",
-//                    "denemedir.",
-//                    "notlar"
-//                }
+//                    new NilveraAPI.Models.Dto.Shared.TaxDto()
+//                    {
+//                        Percent = 0,
+//                        Total = 0,
+//                        TaxCode = ""
+//                    }
+//                },
+//                ManufacturerCode = "",
+//                BrandName = "",
+//                ModelName = "",
+//                Note = "",
+//                OzelMatrahReason = null,
+//                OzelMatrahTotal = null,
+//                AdditionalItemIdentification = new NilveraAPI.Models.Dto.Shared.AdditionalItemIdentificationDto()
+//            },
+//        },
+//        Notes = new List<string>()
+//        {
+//            "Bu",
+//            "bir",
+//            "denemedir.",
+//            "notlar"
+//        }
 //    },
 //    CustomerAlias = "urn:mail:defaultpk@nilvera.com"
 //};
@@ -434,8 +434,8 @@ using NilveraAPI.Models.UblModels.Shared;
 
 #region Faturayı XML olarak gönderir.
 //var client = new RestClient();
-//var request = new RestRequest("https://apitest.nilvera.com/einvoice/Send/Xml?Alias=<alicipostakutusuetiketi>", Method.Post);
-//request.AddHeader("Authorization", "Bearer <API Key>");     //Portaldan aldığınız API KEY giriniz.
+//var request = new RestRequest("https://apitest.nilvera.com/einvoice/Send/Xml?Alias=urn:mail:defaultpk@nilvera.com", Method.Post);
+//request.AddHeader("Authorization", "Bearer 9F9FFF28D59C0B99019C66F322BC1C2350F3D25174C99052B9DCFA3956AAA66B");     //Portaldan aldığınız API KEY giriniz.
 //request.AddHeader("Content-Type", "multipart/form-data");
 //request.AddFile("file", "/path/to/file", "application/xml");   // "/path/to/file" XML'in path giriniz.
 //var response = await client.ExecuteAsync(request);
@@ -493,112 +493,42 @@ using NilveraAPI.Models.UblModels.Shared;
 //        },
 //        InvoiceInfo = new ArchiveInvoiceInfoDto()
 //        {
-//            UUID = Guid.Parse("2fa85f64-5717-4562-b3fc-2c963f66afa6"),
+//            UUID = Guid.Parse(Guid.NewGuid().ToString().ToLower()),
 //            TemplateUUID = Guid.Parse("72813487-e592-4758-87da-be08ed199197"),
 //            InvoiceType = NilveraAPI.Enums.InvoiceType.SATIS,
 //            InvoiceSerieOrNumber = "NIL",
-//            IssueDate = DateTime.Now.ToString("yyyy-MM-dd"),
+//            IssueDate = DateTime.Now,
 //            CurrencyCode = "TRY",
 //            ExchangeRate = 1,
 //            Expenses = new List<ExpensesDto>()
-//                        {
-//                            new ExpensesDto()
-//                            {
-//                                Amount = 12,
-//                                ExpenseType = NilveraAPI.Enums.ExpenseType.HKSKOMISYON
-//                            }
-//                        },
-//            SendType= SendType.KAGIT,
-//            SalesPlatform=SalesPlatform.NORMAL
-//        },
-//        InvoiceLines = new List<EArchiveInvoiceLineDto>()
-//                    {
-//                        new EArchiveInvoiceLineDto()
-//                        {
-//                            Name = "Deneme",
-//                            Price = 12,
-//                            Quantity = 125,
-//                            UnitType = "C62",
-//                            AllowanceTotal = 195,
-//                            KDVPercent = 18,
-//                            AdditionalItemIdentification = new AdditionalItemIdentificationDto()
-//                            {
-//                                TagNumber = "1231231231231231231",
-//                                OwnerName = "deneme",
-//                                OwnerTaxNumber = "22040521512"
-//                            }
-//                        }
-//                    }
-//    }
-//};
-
-//ArchiveInvoiceModel archiveInvoiceDto = new()
-//{
-//    ArchiveInvoice = new ArchiveInvoiceDto()
-//    {
-//        CompanyInfo = new PartyInfoDto()
-//        {
-//            Address = "",
-//            City = "",
-//            Country = "",
-//            District = "",
-//            Fax = "",
-//            Name = "         dasda dasdada      ",
-//            PartyIdentifications = new List<IDTypeDto>(),
-//            Phone = "",
-//            PostalCode = "",
-//            TaxNumber = "1234567890",
-//            TaxOffice = "",
-//            WebSite = ""
-//        },
-//        CustomerInfo = new PartyInfoDto()
-//        {
-//            Address = "",
-//            City = "",
-//            Country = "",
-//            District = "",
-//            Fax = "",
-//            Name = "         dasda dasdada      ",
-//            PartyIdentifications = new List<IDTypeDto>(),
-//            Phone = "",
-//            PostalCode = "",
-//            TaxNumber = "1234567890",
-//            TaxOffice = "",
-//            WebSite = ""
-//        },
-//        InvoiceInfo = new ArchiveInvoiceInfoDto()
-//        {
-//            TaxExemptionReasonInfo = new TaxExemptionReasonInfoDto(),
-//            InvoiceType = NilveraAPI.Enums.InvoiceType.HKSSATIS,
-//            CurrencyCode = "TRY",
-//            Expenses = new List<ExpensesDto>()
-//                    {
-//                        new ExpensesDto()
-//                        {
-//                            Amount = 12,
-//                            ExpenseType = NilveraAPI.Enums.ExpenseType.HKSKOMISYON
-//                        }
-//                    }
-//        },
-//        InvoiceLines = new List<EArchiveInvoiceLineDto>()
+//            {
+//                new ExpensesDto()
 //                {
-//                    new EArchiveInvoiceLineDto()
-//                    {
-//                        Name = "Deneme",
-//                        Price = 12,
-//                        Quantity = 125,
-//                        UnitType = "C62",
-//                        AllowanceTotal = 195,
-//                        KDVPercent = 18,
-//                        AdditionalItemIdentification = new AdditionalItemIdentificationDto()
-//                        {
-//                            TagNumber = "1231231231231231231",
-//                            OwnerName = "deneme",
-//                            OwnerTaxNumber = "22040521512"
-//                        },
-//                    }
-//                },
-//        Notes = new List<string>()
+//                    Amount = 12,
+//                    ExpenseType = NilveraAPI.Enums.ExpenseType.HKSKOMISYON
+//                }
+//            },
+//            SendType = SendType.KAGIT,
+//            SalesPlatform = SalesPlatform.NORMAL
+//        },
+//        InvoiceLines = new List<EArchiveInvoiceLineDto>()
+//        {
+//            new EArchiveInvoiceLineDto()
+//            {
+//                Name = "Deneme",
+//                Price = 12,
+//                Quantity = 125,
+//                UnitType = "C62",
+//                AllowanceTotal = 195,
+//                KDVPercent = 18,
+//                AdditionalItemIdentification = new AdditionalItemIdentificationDto()
+//                {
+//                    TagNumber = "1231231231231231231",
+//                    OwnerName = "deneme",
+//                    OwnerTaxNumber = "22040521512"
+//                }
+//            }
+//        }
 //    }
 //};
 
