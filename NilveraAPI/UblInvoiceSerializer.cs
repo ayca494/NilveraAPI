@@ -80,19 +80,15 @@ namespace NilveraAPI
             {
                 Directory.CreateDirectory(directory_path);
             }
-            if (File.Exists(file_path) == false)
-            {
-                FileStream fs = new FileStream(file_path, FileMode.OpenOrCreate);
-                fs.Flush();
-                fs.Close();
-                File.AppendAllText(file_path, content);
-                xDoc = XDocument.Load(file_path);
-            }
-            else
-            {
-                xDoc = XDocument.Load(file_path);
-            }
-            return(file_path);
+           
+            FileStream fs = new FileStream(file_path, FileMode.OpenOrCreate);
+            fs.Flush();
+            fs.Close();
+            File.Delete(file_path);
+            File.WriteAllText(file_path, content);
+            xDoc = XDocument.Load(file_path);
+
+            return (file_path);
         }
 
 
