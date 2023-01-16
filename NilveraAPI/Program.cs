@@ -354,8 +354,6 @@ using NilveraAPI.Models.UblModels.Shared;
 
 
 string basePath = AppDomain.CurrentDomain.BaseDirectory.Replace("bin\\Debug\\net6.0","BaseXslt");
-//C: \Users\Tunahan\source\repos\NilveraAPI\NilveraAPI\BaseXslt
-//C:\Users\Tunahan\source\repos\NilveraAPI\NilveraAPI\bin\Debug\net6.0
 string filePath = Path.Combine(basePath + "ca747ee5-9c0d-4410-9378-02bc4a5e31fa.xslt");
 
 
@@ -676,8 +674,6 @@ UblInvoice ublInvoice = new UblInvoice()
 
 
 };
-
-
 
 UblInvoiceSerializer ublInvoiceSerializer = new UblInvoiceSerializer();
 string content = await ublInvoiceSerializer.SerializeAsync(ublInvoice, ublInvoiceSerializer.xmlns);
