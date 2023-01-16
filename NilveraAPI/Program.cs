@@ -157,279 +157,279 @@ using NilveraAPI.Models.UblModels.Shared;
 #endregion
 
 #region E-Faturanın Ubl Modelini Xml'e çevirme
-string basePath = AppDomain.CurrentDomain.BaseDirectory.Replace("bin\\Debug\\net6.0", "BaseXslt");
-string filePath = Path.Combine(basePath + "ca747ee5-9c0d-4410-9378-02bc4a5e31fa.xslt");
+//string basePath = AppDomain.CurrentDomain.BaseDirectory.Replace("bin\\Debug\\net6.0", "BaseXslt");
+//string filePath = Path.Combine(basePath + "ca747ee5-9c0d-4410-9378-02bc4a5e31fa.xslt");
 
-if (!File.Exists(filePath))
-{
-    if (!Directory.Exists(basePath))
-        Directory.CreateDirectory(basePath);
-}
-var templateBytes = File.ReadAllText(filePath);
+//if (!File.Exists(filePath))
+//{
+//    if (!Directory.Exists(basePath))
+//        Directory.CreateDirectory(basePath);
+//}
+//var templateBytes = File.ReadAllText(filePath);
 
-var template = System.Convert.ToBase64String(Encoding.UTF8.GetBytes(templateBytes.Substring(templateBytes.IndexOf("<"))));
-
-
-UblInvoice ublInvoice = new UblInvoice()
-{
-    ID = "MTT",
-    InvoiceTypeCode = "SATIS",
-    IssueDate = DateTime.Now.ToString("yyyy-MM-dd"),
-    IssueTime = DateTime.Now.ToString("HH:mm:ss"),
-    ProfileID = "TICARIFATURA",
-    UUID = Guid.NewGuid().ToString().ToLower(),
-    AccountingCustomerParty = new CustomerParty()
-    {
-        Party = new Party()
-        {
-            Contact = new Contact()
-            {
-                ElectronicMail = "kayseri@gmail.com",
-                Telephone = "02223334455",
-                Telefax = "12344"
-            },
-            PostalAddress = new Address()
-            {
-                Country = new Country() { Name = "Türkiye" },
-                CityName = "Kayseri",
-                CitySubdivisionName = "Talas",
-                StreetName = "Teknopark"
-            },
-            PartyName = new PartyName()
-            {
-                Name = "NİLVERA YAZILIM VE BİLİŞİM HİZMETLERİ TİCARET LİMİTED ŞİRKETİ"
-            },
-            PartyIdentification = new List<PartyIdentification>()
-            {
-                new PartyIdentification()
-                {
-                    ID = new IDType() { Id = "6310540565", SchemeId = "VKN" }
-                }
-            }
-        }
-    },
-    AccountingSupplierParty = new SupplierParty()
-    {
-        Party = new Party()
-        {
-            Contact = new Contact()
-            {
-                ElectronicMail = "kayseri@gmail.com",
-                Telephone = "02223334455",
-                Telefax = "12344"
-            },
-            PostalAddress = new Address()
-            {
-                Country = new Country() { Name = "Türkiye" },
-                CityName = "Kayseri",
-                CitySubdivisionName = "Talas",
-                StreetName = "Teknopark"
-            },
-            PartyName = new PartyName()
-            {
-                Name = "NİLVERA YAZILIM VE BİLİŞİM HİZMETLERİ TİCARET LİMİTED ŞİRKETİ"
-            },
-            PartyIdentification = new List<PartyIdentification>()
-            {
-                new PartyIdentification()
-                {
-                    ID = new IDType() { Id = "6310540565", SchemeId = "VKN" }
-                }
-            }
-        }
-    },
-    AllowanceCharge = new List<AllowanceCharge>()
-    {
-        new AllowanceCharge()
-        {
-            Amount = new BaseCurrency()
-            {
-                CurrencyID = "TRY",
-                Value = 5
-            },
-            ChargeIndicator = false
-        }
-    },
-    DocumentCurrencyCode = new DocumentCurrencyCode()
-    {
-        Name = "TRY"
-    },
-    InvoiceLines = new List<InvoiceLine>()
-    {
-        new InvoiceLine()
-        {
-            AllowanceCharge = new List<AllowanceCharge>()
-            {
-                new AllowanceCharge()
-                {
-                    Amount = new BaseCurrency() { CurrencyID = "TRY", Value = 5 },
-                    BaseAmount = new BaseCurrency() { CurrencyID = "TRY", Value = 100 },
-                    MultiplierFactorNumeric = "0.05",
-                    ChargeIndicator = false
-                }
-            },
-            ID = new IDType() { Id = "1" },
-            InvoicedQuantity = new BaseUnit()
-            {
-                UnitCode = "C62",
-                Value = 1
-            },
-            Item = new Item()
-            {
-                Name = "Ürün"
-            },
-            LineExtensionAmount = new BaseCurrency()
-            {
-                CurrencyID = "TRY",
-                Value = 95
-            },
-            Price = new Price()
-            {
-                PriceAmount = new BaseCurrency()
-                {
-                    CurrencyID = "TRY",
-                    Value = 100
-                }
-            },
-            TaxTotal = new TaxTotal()
-            {
-                TaxAmount = new BaseCurrency()
-                {
-                    CurrencyID = "TRY",
-                    Value = (Decimal)17.1
-                },
-                TaxSubtotals = new List<TaxSubtotal>()
-                {
-                    new TaxSubtotal()
-                    {
-                        Percent = 18,
-                        TaxableAmount = new BaseCurrency()
-                        {
-                            CurrencyID = "TRY",
-                            Value = 95
-                        },
-                        CalculationSequenceNumeric = 1,
-                        TaxAmount = new BaseCurrency()
-                        {
-                            CurrencyID = "TRY",
-                            Value = (decimal)17.1
-                        },
-                        TaxCategory = new TaxCategory()
-                        {
-                            TaxScheme = new TaxScheme()
-                            {
-                                Name = "KDV",
-                                TaxTypeCode = "0015"
-                            }
-                        }
-                    }
-                }
-            }
-
-        }
-    },
-    LegalMonetaryTotal = new MonetaryTotal()
-    {
-        AllowanceTotalAmount = new BaseCurrency()
-        {
-            CurrencyID = "TRY",
-            Value = 5
-        },
-        LineExtensionAmount = new BaseCurrency()
-        {
-            CurrencyID = "TRY",
-            Value = 100
-        },
-        PayableAmount = new BaseCurrency()
-        {
-            CurrencyID = "TRY",
-            Value = (decimal)112.1
-        },
-        TaxExclusiveAmount = new BaseCurrency()
-        {
-            CurrencyID = "TRY",
-            Value = 95
-        },
-        TaxInclusiveAmount = new BaseCurrency()
-        {
-            CurrencyID = "TRY",
-            Value = (decimal)112.1
-        }
-    },
-    LineCountNumeric = 1,
-    Notes = new List<string>()
-    {
-        "YALNIZ : YÜZONİKİ TL ON Kr."
-    },
-    TaxTotals = new List<TaxTotal>()
-    {
-        new TaxTotal()
-        {
-            TaxAmount = new BaseCurrency()
-            {
-                CurrencyID = "TRY",
-                Value = (decimal)17.1
-            },
-            TaxSubtotals = new List<TaxSubtotal>()
-            {
-                new TaxSubtotal()
-                {
-                    CalculationSequenceNumeric = 1,
-                    Percent = 18,
-                    TaxAmount = new BaseCurrency()
-                    {
-                        CurrencyID = "TRY",
-                        Value = (decimal)17.1
-                    },
-                    TaxableAmount = new BaseCurrency()
-                    {
-                        CurrencyID = "TRY",
-                        Value = 95
-                    },
-                    TaxCategory = new TaxCategory()
-                    {
-                        TaxScheme = new TaxScheme()
-                        {
-                            Name = "KDV",
-                            TaxTypeCode = "0015"
-                        }
-                    }
-                }
-            }
-        }
-    },
-    AdditionalDocumentReferences = new List<DocumentReference>()
-    {
-        new DocumentReference()
-        {
-            DocumentType = "XSLT",
-            DocumentDescription = "E-Fatura stil dosyası.",
-            ID = new IDType() { Id = "ca747ee5-9c0d-4410-9378-02bc4a5e31fa" },
-            IssueDate = DateTime.Now.ToString("yyyy-MM-dd"),
-            Attachment = new Attachment()
-            {
-                EmbeddedDocumentBinaryObject = new EmbeddedDocumentBinaryObject()
-                {
-                    CharacterSetCode = "UTF-8",
-                    EncodingCode = "Base64",
-                    Filename = "ca747ee5-9c0d-4410-9378-02bc4a5e31fa.xslt",
-                    MimeCode = "application/xml",
-                    Name = template
-                }
-            }
-        }
-    }
+//var template = System.Convert.ToBase64String(Encoding.UTF8.GetBytes(templateBytes.Substring(templateBytes.IndexOf("<"))));
 
 
-};
+//UblInvoice ublInvoice = new UblInvoice()
+//{
+//    ID = "MTT",
+//    InvoiceTypeCode = "SATIS",
+//    IssueDate = DateTime.Now.ToString("yyyy-MM-dd"),
+//    IssueTime = DateTime.Now.ToString("HH:mm:ss"),
+//    ProfileID = "TICARIFATURA",
+//    UUID = Guid.NewGuid().ToString().ToLower(),
+//    AccountingCustomerParty = new CustomerParty()
+//    {
+//        Party = new Party()
+//        {
+//            Contact = new Contact()
+//            {
+//                ElectronicMail = "kayseri@gmail.com",
+//                Telephone = "02223334455",
+//                Telefax = "12344"
+//            },
+//            PostalAddress = new Address()
+//            {
+//                Country = new Country() { Name = "Türkiye" },
+//                CityName = "Kayseri",
+//                CitySubdivisionName = "Talas",
+//                StreetName = "Teknopark"
+//            },
+//            PartyName = new PartyName()
+//            {
+//                Name = "NİLVERA YAZILIM VE BİLİŞİM HİZMETLERİ TİCARET LİMİTED ŞİRKETİ"
+//            },
+//            PartyIdentification = new List<PartyIdentification>()
+//            {
+//                new PartyIdentification()
+//                {
+//                    ID = new IDType() { Id = "6310540565", SchemeId = "VKN" }
+//                }
+//            }
+//        }
+//    },
+//    AccountingSupplierParty = new SupplierParty()
+//    {
+//        Party = new Party()
+//        {
+//            Contact = new Contact()
+//            {
+//                ElectronicMail = "kayseri@gmail.com",
+//                Telephone = "02223334455",
+//                Telefax = "12344"
+//            },
+//            PostalAddress = new Address()
+//            {
+//                Country = new Country() { Name = "Türkiye" },
+//                CityName = "Kayseri",
+//                CitySubdivisionName = "Talas",
+//                StreetName = "Teknopark"
+//            },
+//            PartyName = new PartyName()
+//            {
+//                Name = "NİLVERA YAZILIM VE BİLİŞİM HİZMETLERİ TİCARET LİMİTED ŞİRKETİ"
+//            },
+//            PartyIdentification = new List<PartyIdentification>()
+//            {
+//                new PartyIdentification()
+//                {
+//                    ID = new IDType() { Id = "6310540565", SchemeId = "VKN" }
+//                }
+//            }
+//        }
+//    },
+//    AllowanceCharge = new List<AllowanceCharge>()
+//    {
+//        new AllowanceCharge()
+//        {
+//            Amount = new BaseCurrency()
+//            {
+//                CurrencyID = "TRY",
+//                Value = 5
+//            },
+//            ChargeIndicator = false
+//        }
+//    },
+//    DocumentCurrencyCode = new DocumentCurrencyCode()
+//    {
+//        Name = "TRY"
+//    },
+//    InvoiceLines = new List<InvoiceLine>()
+//    {
+//        new InvoiceLine()
+//        {
+//            AllowanceCharge = new List<AllowanceCharge>()
+//            {
+//                new AllowanceCharge()
+//                {
+//                    Amount = new BaseCurrency() { CurrencyID = "TRY", Value = 5 },
+//                    BaseAmount = new BaseCurrency() { CurrencyID = "TRY", Value = 100 },
+//                    MultiplierFactorNumeric = "0.05",
+//                    ChargeIndicator = false
+//                }
+//            },
+//            ID = new IDType() { Id = "1" },
+//            InvoicedQuantity = new BaseUnit()
+//            {
+//                UnitCode = "C62",
+//                Value = 1
+//            },
+//            Item = new Item()
+//            {
+//                Name = "Ürün"
+//            },
+//            LineExtensionAmount = new BaseCurrency()
+//            {
+//                CurrencyID = "TRY",
+//                Value = 95
+//            },
+//            Price = new Price()
+//            {
+//                PriceAmount = new BaseCurrency()
+//                {
+//                    CurrencyID = "TRY",
+//                    Value = 100
+//                }
+//            },
+//            TaxTotal = new TaxTotal()
+//            {
+//                TaxAmount = new BaseCurrency()
+//                {
+//                    CurrencyID = "TRY",
+//                    Value = (Decimal)17.1
+//                },
+//                TaxSubtotals = new List<TaxSubtotal>()
+//                {
+//                    new TaxSubtotal()
+//                    {
+//                        Percent = 18,
+//                        TaxableAmount = new BaseCurrency()
+//                        {
+//                            CurrencyID = "TRY",
+//                            Value = 95
+//                        },
+//                        CalculationSequenceNumeric = 1,
+//                        TaxAmount = new BaseCurrency()
+//                        {
+//                            CurrencyID = "TRY",
+//                            Value = (decimal)17.1
+//                        },
+//                        TaxCategory = new TaxCategory()
+//                        {
+//                            TaxScheme = new TaxScheme()
+//                            {
+//                                Name = "KDV",
+//                                TaxTypeCode = "0015"
+//                            }
+//                        }
+//                    }
+//                }
+//            }
 
-UblInvoiceSerializer ublInvoiceSerializer = new UblInvoiceSerializer();
-string content = await ublInvoiceSerializer.SerializeAsync(ublInvoice, ublInvoiceSerializer.xmlns);
+//        }
+//    },
+//    LegalMonetaryTotal = new MonetaryTotal()
+//    {
+//        AllowanceTotalAmount = new BaseCurrency()
+//        {
+//            CurrencyID = "TRY",
+//            Value = 5
+//        },
+//        LineExtensionAmount = new BaseCurrency()
+//        {
+//            CurrencyID = "TRY",
+//            Value = 100
+//        },
+//        PayableAmount = new BaseCurrency()
+//        {
+//            CurrencyID = "TRY",
+//            Value = (decimal)112.1
+//        },
+//        TaxExclusiveAmount = new BaseCurrency()
+//        {
+//            CurrencyID = "TRY",
+//            Value = 95
+//        },
+//        TaxInclusiveAmount = new BaseCurrency()
+//        {
+//            CurrencyID = "TRY",
+//            Value = (decimal)112.1
+//        }
+//    },
+//    LineCountNumeric = 1,
+//    Notes = new List<string>()
+//    {
+//        "YALNIZ : YÜZONİKİ TL ON Kr."
+//    },
+//    TaxTotals = new List<TaxTotal>()
+//    {
+//        new TaxTotal()
+//        {
+//            TaxAmount = new BaseCurrency()
+//            {
+//                CurrencyID = "TRY",
+//                Value = (decimal)17.1
+//            },
+//            TaxSubtotals = new List<TaxSubtotal>()
+//            {
+//                new TaxSubtotal()
+//                {
+//                    CalculationSequenceNumeric = 1,
+//                    Percent = 18,
+//                    TaxAmount = new BaseCurrency()
+//                    {
+//                        CurrencyID = "TRY",
+//                        Value = (decimal)17.1
+//                    },
+//                    TaxableAmount = new BaseCurrency()
+//                    {
+//                        CurrencyID = "TRY",
+//                        Value = 95
+//                    },
+//                    TaxCategory = new TaxCategory()
+//                    {
+//                        TaxScheme = new TaxScheme()
+//                        {
+//                            Name = "KDV",
+//                            TaxTypeCode = "0015"
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    },
+//    AdditionalDocumentReferences = new List<DocumentReference>()
+//    {
+//        new DocumentReference()
+//        {
+//            DocumentType = "XSLT",
+//            DocumentDescription = "E-Fatura stil dosyası.",
+//            ID = new IDType() { Id = "ca747ee5-9c0d-4410-9378-02bc4a5e31fa" },
+//            IssueDate = DateTime.Now.ToString("yyyy-MM-dd"),
+//            Attachment = new Attachment()
+//            {
+//                EmbeddedDocumentBinaryObject = new EmbeddedDocumentBinaryObject()
+//                {
+//                    CharacterSetCode = "UTF-8",
+//                    EncodingCode = "Base64",
+//                    Filename = "ca747ee5-9c0d-4410-9378-02bc4a5e31fa.xslt",
+//                    MimeCode = "application/xml",
+//                    Name = template
+//                }
+//            }
+//        }
+//    }
 
-var newcontent = ublInvoiceSerializer.CleanXmlContent(content);
 
-Console.WriteLine("Xml oluşturuldu. Dosya yolu : " + ublInvoiceSerializer.LoadOrCreateXML(newcontent));
-Console.ReadLine();
+//};
+
+//UblInvoiceSerializer ublInvoiceSerializer = new UblInvoiceSerializer();
+//string content = await ublInvoiceSerializer.SerializeAsync(ublInvoice, ublInvoiceSerializer.xmlns);
+
+//var newcontent = ublInvoiceSerializer.CleanXmlContent(content);
+
+//Console.WriteLine("Xml oluşturuldu. Dosya yolu : " + ublInvoiceSerializer.LoadOrCreateXML(newcontent));
+//Console.ReadLine();
 #endregion
 
 #region Faturayı XML olarak gönderir.
