@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace NilveraAPI.Models.UblModels.UserAccount
 {
 
-    [Serializable()]
+    [Serializable()]    
     [DesignerCategory("code")]
     [XmlType(AnonymousType = true, Namespace = "http://www.hr-xml.org/3")]
     [XmlRoot(Namespace = "http://www.hr-xml.org/3", IsNullable = false)]
