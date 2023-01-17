@@ -975,14 +975,14 @@ using NilveraAPI.Models.UblModels.Despatch;
 
 
 #region İrsaliyeyi Xml olarak gönderir
-var client = new RestClient();
-var request = new RestRequest("https://apitest.nilvera.com/edespatch/Send/Xml?Alias=urn:mail:defaultpk@nilvera.com", Method.Post);
-request.AddHeader("Authorization", "Bearer 9F9FFF28D59C0B99019C66F322BC1C2350F3D25174C99052B9DCFA3956AAA66B");     //Portaldan aldığınız API KEY giriniz.
-request.AddHeader("Content-Type", "multipart/form-data");
-request.AddFile("file", "C:\\Users\\Tunahan\\source\\repos\\NilveraAPI\\NilveraAPI\\bin\\Debug\\net6.0\\XML\\Fatura.xml", "application/xml");   // "/path/to/file" XML'in path giriniz.
-var response = await client.ExecuteAsync(request);
-Console.WriteLine(response.Content);
-Console.ReadLine();
+//var client = new RestClient();
+//var request = new RestRequest("https://apitest.nilvera.com/edespatch/Send/Xml?Alias=urn:mail:defaultpk@nilvera.com", Method.Post);
+//request.AddHeader("Authorization", "Bearer 9F9FFF28D59C0B99019C66F322BC1C2350F3D25174C99052B9DCFA3956AAA66B");     //Portaldan aldığınız API KEY giriniz.
+//request.AddHeader("Content-Type", "multipart/form-data");
+//request.AddFile("file", "C:\\Users\\Tunahan\\source\\repos\\NilveraAPI\\NilveraAPI\\bin\\Debug\\net6.0\\XML\\Fatura.xml", "application/xml");   // "/path/to/file" XML'in path giriniz.
+//var response = await client.ExecuteAsync(request);
+//Console.WriteLine(response.Content);
+//Console.ReadLine();
 #endregion
 
 
