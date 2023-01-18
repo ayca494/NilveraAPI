@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace NilveraAPI
-{    
+namespace NilveraAPI.Serializer
+{
     public class UblDespatchSerializer
     {
         public readonly XmlSerializerNamespaces xmlns = new XmlSerializerNamespaces();

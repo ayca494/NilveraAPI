@@ -8,7 +8,7 @@ using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 
-namespace NilveraAPI
+namespace NilveraAPI.Serializer
 {
     public class UblInvoiceSerializer
     {
@@ -31,7 +31,7 @@ namespace NilveraAPI
         }
         public async Task<string> SerializeAsync<T>(T value, XmlSerializerNamespaces xmlns, string xslt = null) where T : class
         {
-            return value == null ? null : Encoding.UTF8.GetString(await XmlSerializeToByteAsync<T>(value, xmlns, xslt));
+            return value == null ? null : Encoding.UTF8.GetString(await XmlSerializeToByteAsync(value, xmlns, xslt));
         }
         private async Task<byte[]> XmlSerializeToByteAsync<T>(T value, XmlSerializerNamespaces xmlns, string xslt = null) where T : class
         {
@@ -80,7 +80,7 @@ namespace NilveraAPI
             {
                 Directory.CreateDirectory(directory_path);
             }
-           
+
             FileStream fs = new FileStream(file_path, FileMode.OpenOrCreate);
             fs.Flush();
             fs.Close();
@@ -88,7 +88,7 @@ namespace NilveraAPI
             File.WriteAllText(file_path, content);
             xDoc = XDocument.Load(file_path);
 
-            return (file_path);
+            return file_path;
         }
 
 
