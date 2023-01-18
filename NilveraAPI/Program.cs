@@ -23,8 +23,43 @@ using System.Reflection;
 using NilveraAPI.Models.UblModels.Producer;
 using NilveraAPI.Models.UblModels.Voucher;
 using NilveraAPI.Serializer;
+using NilveraAPI.Models.Pagination;
+using NilveraAPI.Models.Pagination.EInvoiceModel;
+using NilveraAPI.Models.CheckGlobalCompany;
 
 
+//TC veya VKN kontrol edilerek E-Fatura ve E-İrsaliye Mükellefi olup olmadığını belirtir. 
+#region Mükellef Sorgulama
+
+//string TaxNumber = "57223294532";
+//RestClient client = new RestClient();
+//var request = new RestRequest($"https://apitest.nilvera.com/general/GlobalCompany/Check/TaxNumber/{TaxNumber}", Method.Get);
+//request.AddHeader("Authorization", "Bearer 9F9FFF28D59C0B99019C66F322BC1C2350F3D25174C99052B9DCFA3956AAA66B");
+//request.AddQueryParameter("globalUserType", GlobalUserType.Invoice); //E-İrsaliye kontrolü için GlobalUserType.DespatchAdvice olmalıdır.
+//var response = await client.ExecuteAsync<IEnumerable<GlobalCompanyInfoResponse>>(request);
+//var generalResponse = response.Parse();
+
+//if (generalResponse.Content.Any())
+//{
+//    foreach (var item in generalResponse.Content)
+//    {
+//        Console.WriteLine($"{item.FirstCreatedTime} Tarihinden İtibaren Mükellef.");
+//        Console.WriteLine($"Ünvan : {item.Title}");
+//        Console.WriteLine($"Etiket : {item.Name}");
+//        Console.WriteLine($"Tipi : {item.Type}");
+//        Console.WriteLine($"Etiket Oluşturulma Tarihi : {item.CreationTime}");
+//        Console.WriteLine("******************************************************");
+//    }
+//}
+//else
+//{
+//    Console.WriteLine("Mükellef Değil");
+//}
+//Console.ReadLine();
+
+#endregion
+
+//E-Fatura Mükellefi ise yukarıda bize dönen etiketi kullanarak E-Fatura gönderilir.
 #region E-Fatura
 
 #region Faturayı Model olarak gönderir.
@@ -456,7 +491,7 @@ using NilveraAPI.Serializer;
 
 #endregion
 
-
+//E-Fatura Mükellefi değilse e-arşiv gönderilir.
 #region E-Arşiv
 
 #region E-Arşiv Model olarak gönderir.
@@ -2184,6 +2219,34 @@ using NilveraAPI.Serializer;
 //Console.ReadLine();
 #endregion
 
+#endregion
+
+
+#region Giden E-Faturalar Listelenir (Pagination)
+//var client = new RestClient();
+//var request = new RestRequest("https://apitest.nilvera.com/einvoice/Sale", Method.Get);
+//request.AddHeader("Authorization", "Bearer 9F9FFF28D59C0B99019C66F322BC1C2350F3D25174C99052B9DCFA3956AAA66B");
+//request.RequestFormat = DataFormat.Json;
+//request.AddQueryParameter("Page", 1);
+//request.AddQueryParameter("PageSize", 30);
+//request.AddQueryParameter("StartDate", DateTime.Now.AddDays(-7).ToString("yyyy-MM-ddTHH:mm:ss.fffZ"));
+//request.AddQueryParameter("EndDate", DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffZ"));
+//var response = await client.ExecuteAsync<Pagination<SaleInvoiceResponse>>(request);
+//var generalResponse = response.Parse();
+
+//Console.WriteLine("E-Faturalar : ");
+//foreach (var item in generalResponse.Content.Content)
+//{
+//    Console.WriteLine($"UUID : {item.UUID}");
+//    Console.WriteLine($"VKN : {item.TaxNumber}");
+//    Console.WriteLine($"Fatura Numarası : {item.InvoiceNumber}");
+//    Console.WriteLine($"Fatura Tarihi : {item.IssueDate}");
+//    Console.WriteLine($"Fatura Tutarı : {item.PayableAmount}");
+//    Console.WriteLine("*******************************************");
+//}
+
+////Console.WriteLine(response.Content);
+//Console.ReadLine();
 #endregion
 
 
