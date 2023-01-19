@@ -468,22 +468,23 @@ using NilveraAPI.Models.CheckGlobalCompany;
 //};
 
 //UblInvoiceSerializer ublInvoiceSerializer = new UblInvoiceSerializer();
-//string content = await ublInvoiceSerializer.SerializeAsync(ublInvoice, ublInvoiceSerializer.xmlns);
+//string content = await Serializer.SerializeAsync(ublInvoice, ublInvoiceSerializer.xmlns);
 
-//var newcontent = ublInvoiceSerializer.CleanXmlContent(content);
+//var newcontent = Serializer.CleanXmlContent(content);
 
-//Console.WriteLine("Xml oluşturuldu. Dosya yolu : " + ublInvoiceSerializer.LoadOrCreateXML(newcontent));
+//Console.WriteLine("Xml oluşturuldu. Dosya yolu : " + Serializer.LoadOrCreateXml(newcontent));
 //Console.ReadLine();
 #endregion
 
 
 
 #region Faturayı XML olarak gönderir.
+//string file_path = AppDomain.CurrentDomain.BaseDirectory + "Dosyalar\\XML\\Fatura.xml";
 //var client = new RestClient();
 //var request = new RestRequest("https://apitest.nilvera.com/einvoice/Send/Xml?Alias=urn:mail:defaultpk@nilvera.com", Method.Post);
 //request.AddHeader("Authorization", "Bearer 9F9FFF28D59C0B99019C66F322BC1C2350F3D25174C99052B9DCFA3956AAA66B");     //Portaldan aldığınız API KEY giriniz.
 //request.AddHeader("Content-Type", "multipart/form-data");
-//request.AddFile("file", "/path/to/file", "application/xml");   // "/path/to/file" XML'in path giriniz.
+//request.AddFile("file", file_path , "application/xml");   
 //var response = await client.ExecuteAsync(request);
 //Console.WriteLine(response.Content);
 //Console.ReadLine();
@@ -593,18 +594,6 @@ using NilveraAPI.Models.CheckGlobalCompany;
 //Console.WriteLine(response.Content);
 //Console.ReadLine();
 
-#endregion
-
-
-#region E-Arşiv Xml olarak gönderir.
-//var client = new RestClient();
-//var request = new RestRequest("https://apitest.nilvera.com/earchive/Send/Xml?Alias=urn:mail:defaultpk@nilvera.com", Method.Post);
-//request.AddHeader("Authorization", "Bearer 9F9FFF28D59C0B99019C66F322BC1C2350F3D25174C99052B9DCFA3956AAA66B");     //Portaldan aldığınız API KEY giriniz.
-//request.AddHeader("Content-Type", "multipart/form-data");
-//request.AddFile("file", "C:\\Users\\Tunahan\\Downloads\\MOHAMMAD ALAJATI-NIL.xml", "application/xml");   // "/path/to/file" XML'in path giriniz.
-//var response = await client.ExecuteAsync(request);
-//Console.WriteLine(response.Content);
-//Console.ReadLine();
 #endregion
 
 
@@ -892,11 +881,24 @@ using NilveraAPI.Models.CheckGlobalCompany;
 //};
 
 //UblInvoiceSerializer ublInvoiceSerializer = new UblInvoiceSerializer();
-//string content = await ublInvoiceSerializer.SerializeAsync(ublEArchiveInvoice, ublInvoiceSerializer.xmlns);
+//string content = await Serializer.SerializeAsync(ublEArchiveInvoice, ublInvoiceSerializer.xmlns);
 
-//var newcontent = ublInvoiceSerializer.CleanXmlContent(content);
+//var newcontent = Serializer.CleanXmlContent(content);
 
-//Console.WriteLine("Xml oluşturuldu. Dosya yolu : " + ublInvoiceSerializer.LoadOrCreateXML(newcontent));
+//Console.WriteLine("Xml oluşturuldu. Dosya yolu : " + Serializer.LoadOrCreateXml(newcontent));
+//Console.ReadLine();
+#endregion
+
+
+#region E-Arşiv Xml olarak gönderir.
+//string file_path = AppDomain.CurrentDomain.BaseDirectory + "Dosyalar\\XML\\Fatura.xml";
+//var client = new RestClient();
+//var request = new RestRequest("https://apitest.nilvera.com/earchive/Send/Xml?Alias=urn:mail:defaultpk@nilvera.com", Method.Post);
+//request.AddHeader("Authorization", "Bearer 9F9FFF28D59C0B99019C66F322BC1C2350F3D25174C99052B9DCFA3956AAA66B");     //Portaldan aldığınız API KEY giriniz.
+//request.AddHeader("Content-Type", "multipart/form-data");
+//request.AddFile("file", file_path , "application/xml");   
+//var response = await client.ExecuteAsync(request);
+//Console.WriteLine(response.Content);
 //Console.ReadLine();
 #endregion
 
@@ -1022,18 +1024,6 @@ using NilveraAPI.Models.CheckGlobalCompany;
 //request.AddJsonBody(eDespatch);
 //request.AddHeader("Content-Type", "application/json");
 //request.AddHeader("Accept", "application/json");
-//var response = await client.ExecuteAsync(request);
-//Console.WriteLine(response.Content);
-//Console.ReadLine();
-#endregion
-
-
-#region İrsaliyeyi Xml olarak gönderir
-//var client = new RestClient();
-//var request = new RestRequest("https://apitest.nilvera.com/edespatch/Send/Xml?Alias=urn:mail:defaultpk@nilvera.com", Method.Post);
-//request.AddHeader("Authorization", "Bearer 9F9FFF28D59C0B99019C66F322BC1C2350F3D25174C99052B9DCFA3956AAA66B");     //Portaldan aldığınız API KEY giriniz.
-//request.AddHeader("Content-Type", "multipart/form-data");
-//request.AddFile("file", "C:\\Users\\Tunahan\\Downloads\\Fatura.xml", "application/xml");   // "/path/to/file" XML'in path giriniz.
 //var response = await client.ExecuteAsync(request);
 //Console.WriteLine(response.Content);
 //Console.ReadLine();
@@ -1331,13 +1321,25 @@ using NilveraAPI.Models.CheckGlobalCompany;
 //    }
 //};
 
-//UblInvoiceSerializer ublInvoiceSerializer = new UblInvoiceSerializer();
 //UblDespatchSerializer ublDespatchSerializer = new UblDespatchSerializer();
-//string content = await ublInvoiceSerializer.SerializeAsync(UblDespatch, ublDespatchSerializer.xmlns);
+//string content = await Serializer.SerializeAsync(UblDespatch, ublDespatchSerializer.xmlns);
 
-//var newcontent = ublInvoiceSerializer.CleanXmlContent(content);
+//var newcontent = Serializer.CleanXmlContent(content);
 
-//Console.WriteLine("Xml oluşturuldu. Dosya yolu : " + ublInvoiceSerializer.LoadOrCreateXML(newcontent));
+//Console.WriteLine("Xml oluşturuldu. Dosya yolu : " + Serializer.LoadOrCreateXml(newcontent));
+//Console.ReadLine();
+#endregion
+
+
+#region İrsaliyeyi Xml olarak gönderir
+//string file_path = AppDomain.CurrentDomain.BaseDirectory + "Dosyalar\\XML\\Fatura.xml";
+//var client = new RestClient();
+//var request = new RestRequest("https://apitest.nilvera.com/edespatch/Send/Xml?Alias=urn:mail:defaultpk@nilvera.com", Method.Post);
+//request.AddHeader("Authorization", "Bearer 9F9FFF28D59C0B99019C66F322BC1C2350F3D25174C99052B9DCFA3956AAA66B");     //Portaldan aldığınız API KEY giriniz.
+//request.AddHeader("Content-Type", "multipart/form-data");
+//request.AddFile("file", file_path , "application/xml");  
+//var response = await client.ExecuteAsync(request);
+//Console.WriteLine(response.Content);
 //Console.ReadLine();
 #endregion
 
@@ -1435,18 +1437,6 @@ using NilveraAPI.Models.CheckGlobalCompany;
 //request.AddJsonBody(producerModel);
 //request.AddHeader("Content-Type", "application/json");
 //request.AddHeader("Accept", "application/json");
-//var response = await client.ExecuteAsync(request);
-//Console.WriteLine(response.Content);
-//Console.ReadLine();
-#endregion
-
-
-#region Müstahsil Xml olarak gönderir
-//var client = new RestClient();
-//var request = new RestRequest("https://apitest.nilvera.com/emm/Send/Xml?Alias=urn:mail:defaultpk@nilvera.com", Method.Post);
-//request.AddHeader("Authorization", "Bearer 9F9FFF28D59C0B99019C66F322BC1C2350F3D25174C99052B9DCFA3956AAA66B");     //Portaldan aldığınız API KEY giriniz.
-//request.AddHeader("Content-Type", "multipart/form-data");
-//request.AddFile("file", "C:\\Users\\Tunahan\\Downloads\\Fatura.xml", "application/xml");   // "/path/to/file" XML'in path giriniz.
 //var response = await client.ExecuteAsync(request);
 //Console.WriteLine(response.Content);
 //Console.ReadLine();
@@ -1781,16 +1771,28 @@ using NilveraAPI.Models.CheckGlobalCompany;
 //    }
 //};
 
-//UblInvoiceSerializer ublInvoiceSerializer = new UblInvoiceSerializer();
 //UblProducerSerializer ublProducerSerializer = new UblProducerSerializer();
-//string content = await ublInvoiceSerializer.SerializeAsync(producer, ublProducerSerializer.xmlns);
+//string content = await Serializer.SerializeAsync(producer, ublProducerSerializer.xmlns);
 
-//var newcontent = ublInvoiceSerializer.CleanXmlContent(content);
+//var newcontent = Serializer.CleanXmlContent(content);
 
-//Console.WriteLine("Xml oluşturuldu. Dosya yolu : " + ublInvoiceSerializer.LoadOrCreateXML(newcontent));
+//Console.WriteLine("Xml oluşturuldu. Dosya yolu : " + Serializer.LoadOrCreateXml(newcontent));
 //Console.ReadLine();
 
 
+#endregion
+
+
+#region Müstahsil Xml olarak gönderir
+//string file_path = AppDomain.CurrentDomain.BaseDirectory + "Dosyalar\\XML\\Fatura.xml";
+//var client = new RestClient();
+//var request = new RestRequest("https://apitest.nilvera.com/emm/Send/Xml?Alias=urn:mail:defaultpk@nilvera.com", Method.Post);
+//request.AddHeader("Authorization", "Bearer 9F9FFF28D59C0B99019C66F322BC1C2350F3D25174C99052B9DCFA3956AAA66B");     //Portaldan aldığınız API KEY giriniz.
+//request.AddHeader("Content-Type", "multipart/form-data");
+//request.AddFile("file", file_path, "application/xml");   
+//var response = await client.ExecuteAsync(request);
+//Console.WriteLine(response.Content);
+//Console.ReadLine();
 #endregion
 
 #endregion
@@ -1893,18 +1895,6 @@ using NilveraAPI.Models.CheckGlobalCompany;
 //request.AddJsonBody(voucherModel);
 //request.AddHeader("Content-Type", "application/json");
 //request.AddHeader("Accept", "application/json");
-//var response = await client.ExecuteAsync(request);
-//Console.WriteLine(response.Content);
-//Console.ReadLine();
-#endregion
-
-
-#region Serbest meslek makbuzu Xml olarak gönderir
-//var client = new RestClient();
-//var request = new RestRequest("https://apitest.nilvera.com/esmm/Send/Xml?Alias=urn:mail:defaultpk@nilvera.com", Method.Post);
-//request.AddHeader("Authorization", "Bearer 9F9FFF28D59C0B99019C66F322BC1C2350F3D25174C99052B9DCFA3956AAA66B");     //Portaldan aldığınız API KEY giriniz.
-//request.AddHeader("Content-Type", "multipart/form-data");
-//request.AddFile("file", "C:\\Users\\Tunahan\\Downloads\\Fatura.xml", "application/xml");   // "/path/to/file" XML'in path giriniz.
 //var response = await client.ExecuteAsync(request);
 //Console.WriteLine(response.Content);
 //Console.ReadLine();
@@ -2210,12 +2200,25 @@ using NilveraAPI.Models.CheckGlobalCompany;
 //    }
 //};
 
-//UblInvoiceSerializer ublInvoiceSerializer = new UblInvoiceSerializer();
 //UblVoucherSerializer ublVoucherSerializer = new UblVoucherSerializer();
 
-//string content = await ublInvoiceSerializer.SerializeAsync(voucher, ublVoucherSerializer.xmlns);
-//var newContent = ublInvoiceSerializer.CleanXmlContent(content);
-//Console.WriteLine("Xml oluşturuldu. Dosya yolu : " + ublInvoiceSerializer.LoadOrCreateXML(newContent));
+//string content = await Serializer.SerializeAsync(voucher, ublVoucherSerializer.xmlns);
+//var newContent = Serializer.CleanXmlContent(content);
+//Console.WriteLine("Xml oluşturuldu. Dosya yolu : " + Serializer.LoadOrCreateXml(newContent));
+//Console.ReadLine();
+
+#endregion
+
+
+#region Serbest meslek makbuzu Xml olarak gönderir
+//string file_path = AppDomain.CurrentDomain.BaseDirectory + "Dosyalar\\XML\\Fatura.xml";
+//var client = new RestClient();
+//var request = new RestRequest("https://apitest.nilvera.com/esmm/Send/Xml?Alias=urn:mail:defaultpk@nilvera.com", Method.Post);
+//request.AddHeader("Authorization", "Bearer 9F9FFF28D59C0B99019C66F322BC1C2350F3D25174C99052B9DCFA3956AAA66B");     //Portaldan aldığınız API KEY giriniz.
+//request.AddHeader("Content-Type", "multipart/form-data");
+//request.AddFile("file", file_path, "application/xml");   
+//var response = await client.ExecuteAsync(request);
+//Console.WriteLine(response.Content);
 //Console.ReadLine();
 #endregion
 
@@ -2223,6 +2226,7 @@ using NilveraAPI.Models.CheckGlobalCompany;
 
 
 #region Giden E-Faturalar Listelenir (Pagination)
+
 //var client = new RestClient();
 //var request = new RestRequest("https://apitest.nilvera.com/einvoice/Sale", Method.Get);
 //request.AddHeader("Authorization", "Bearer 9F9FFF28D59C0B99019C66F322BC1C2350F3D25174C99052B9DCFA3956AAA66B");
@@ -2244,9 +2248,61 @@ using NilveraAPI.Models.CheckGlobalCompany;
 //    Console.WriteLine($"Fatura Tutarı : {item.PayableAmount}");
 //    Console.WriteLine("*******************************************");
 //}
-
 ////Console.WriteLine(response.Content);
 //Console.ReadLine();
+
 #endregion
 
+
+#region E-Fatura Pdf indirir
+//string UUID = "5b0a789b-1ec6-4e5a-911f-139c59985429"; //Faturanın UUID'si girilir.
+//RestClient client = new RestClient();
+//var request = new RestRequest($"https://apitest.nilvera.com/einvoice/Sale/{UUID}/pdf", Method.Get);
+//request.AddHeader("Authorization", "Bearer 9F9FFF28D59C0B99019C66F322BC1C2350F3D25174C99052B9DCFA3956AAA66B");
+//var response = await client.ExecuteAsync(request);
+
+//var base64 = JsonConvert.DeserializeObject<string>(response.Content);
+
+//var path = Serializer.LoadOrCreatePdf(base64);
+
+//Console.WriteLine("Faturanın pdf'i oluşmuştur. Dosya yolu : " + path);
+//Console.ReadLine();
+
+#endregion
+
+
+#region E-Fatura html indirir
+
+//string UUID = "5b0a789b-1ec6-4e5a-911f-139c59985429";  //Faturanın UUID'si girilir.
+//RestClient client = new RestClient();
+//var request = new RestRequest($"https://apitest.nilvera.com/einvoice/Sale/{UUID}/html", Method.Get);
+//request.AddHeader("Authorization", "Bearer 9F9FFF28D59C0B99019C66F322BC1C2350F3D25174C99052B9DCFA3956AAA66B");
+//var response = await client.ExecuteAsync(request);
+
+//var html = JsonConvert.DeserializeObject<string>(response.Content);
+
+//var path = Serializer.LoadOrCreateHtml(html);
+
+//Console.WriteLine("Faturanın html'i oluşmuştur. Dosya yolu : " + path);
+//Console.ReadLine();
+
+#endregion
+
+
+#region E-Fatura xml indirir
+
+//string UUID = "5b0a789b-1ec6-4e5a-911f-139c59985429";  //Faturanın UUID'si girilir.
+//RestClient client = new RestClient();
+//var request = new RestRequest($"https://apitest.nilvera.com/einvoice/Sale/{UUID}/xml", Method.Get);
+//request.AddHeader("Authorization", "Bearer 9F9FFF28D59C0B99019C66F322BC1C2350F3D25174C99052B9DCFA3956AAA66B");
+//var response = await client.ExecuteAsync(request);
+
+//var xml = JsonConvert.DeserializeObject<string>(response.Content);
+
+//var path = Serializer.LoadOrCreateXml(xml);
+
+//Console.WriteLine(path);
+//Console.ReadLine();
+
+#endregion
 

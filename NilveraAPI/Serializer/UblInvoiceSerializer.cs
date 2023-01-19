@@ -28,70 +28,7 @@ namespace NilveraAPI.Serializer
             xmlns.Add("xsd", "http://www.w3.org/2001/XMLSchema");
             xmlns.Add("xsi", "http://www.w3.org/2001/XMLSchema-instance");
             xmlns.Add("", "urn:oasis:names:specification:ubl:schema:xsd:Invoice-2");
-        }
-        public async Task<string> SerializeAsync<T>(T value, XmlSerializerNamespaces xmlns, string xslt = null) where T : class
-        {
-            return value == null ? null : Encoding.UTF8.GetString(await XmlSerializeToByteAsync(value, xmlns, xslt));
-        }
-        private async Task<byte[]> XmlSerializeToByteAsync<T>(T value, XmlSerializerNamespaces xmlns, string xslt = null) where T : class
-        {
-            if (value == null)
-            {
-                return null;
-            }
-
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(T));
-            using (MemoryStream memoryStream = new MemoryStream())
-            {
-                using (XmlWriter xmlWriter = XmlWriter.Create(memoryStream))
-                {
-                    if (!string.IsNullOrEmpty(xslt))
-                    {
-                        await xmlWriter.WriteProcessingInstructionAsync("xml-stylesheet", "type=\"text/xsl\" href=\"" + xslt + "\"");
-                    }
-
-                    xmlSerializer.Serialize(xmlWriter, value, xmlns);
-                    return memoryStream.ToArray();
-                }
-            }
-        }
-
-        public string CleanXmlContent(string content)
-        {
-            string empty = string.Empty;
-            int startIndex = content.IndexOf("<?");
-            int num = 0;
-            if (startIndex >= 0)
-            {
-                num = content.IndexOf("?>", startIndex);
-            }
-
-            return startIndex < 0 || num < 0 ? content : content.Substring(num + 2, content.Length - (num + 2));
-        }
-
-
-        public string LoadOrCreateXML(string content)
-        {
-            XDocument xDoc = new XDocument();
-            string directory_path = AppDomain.CurrentDomain.BaseDirectory + "XML";
-            string file_path = AppDomain.CurrentDomain.BaseDirectory + "XML\\Fatura.xml";
-
-            if (Directory.Exists(directory_path) == false)
-            {
-                Directory.CreateDirectory(directory_path);
-            }
-
-            FileStream fs = new FileStream(file_path, FileMode.OpenOrCreate);
-            fs.Flush();
-            fs.Close();
-            File.Delete(file_path);
-            File.WriteAllText(file_path, content);
-            xDoc = XDocument.Load(file_path);
-
-            return file_path;
-        }
-
-
+        }      
 
     }
 
