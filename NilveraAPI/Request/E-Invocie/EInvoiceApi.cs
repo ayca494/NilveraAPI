@@ -1,7 +1,12 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
+using NilveraAPI.Enums;
 using NilveraAPI.Models;
+using NilveraAPI.Models.CheckGlobalCompany;
 using NilveraAPI.Models.Dto;
+using NilveraAPI.Models.Pagination;
+using NilveraAPI.Models.Pagination.EInvoiceModel;
 using NilveraAPI.Models.Response;
 using NilveraAPI.Models.UblModels.Invoice;
 using NilveraAPI.Models.UblModels.Shared;
@@ -17,7 +22,26 @@ namespace NilveraAPI.Request.E_Invocie
 {
     public class EInvoiceApi : IInvoiceApi<InvoiceResponse>
     {
-        #region Faturayı Model olarak gönderir.
+        private readonly IConfiguration configuration;
+        public string BaseUrl { get; set; }
+        public string ApiKey { get; set; }
+        public EInvoiceApi()
+        {
+            configuration = ServiceRegistration.Services.GetService<IConfiguration>();
+            BaseUrl = configuration["BaseUrl"];
+            ApiKey = configuration["ApiKey"];
+        }
+        //TC veya VKN kontrol edilerek E-Fatura ve E-İrsaliye Mükellefi olup olmadığını belirtir. 
+        public async Task<GeneralResponse<IEnumerable<GlobalCompanyInfoResponse>>> CheckGlobalCompany(string TaxNumber)
+        {
+            RestClient client = new RestClient(BaseUrl);
+            var request = new RestRequest($"/general/GlobalCompany/Check/TaxNumber/{TaxNumber}", Method.Get);
+            request.AddHeader("Authorization", $"Bearer {ApiKey}");
+            request.AddQueryParameter("globalUserType", GlobalUserType.Invoice); 
+            var response = await client.ExecuteAsync<IEnumerable<GlobalCompanyInfoResponse>>(request);
+            var generalResponse = response.Parse();    
+            return generalResponse;
+        }
         public async Task<InvoiceResponse> SendModel()
         {
             EInvoiceModel eInvoiceModel = new EInvoiceModel()
@@ -144,9 +168,9 @@ namespace NilveraAPI.Request.E_Invocie
                 CustomerAlias = "urn:mail:defaultpk@nilvera.com"
             };
 
-            var client = new RestClient();
-            var request = new RestRequest("https://apitest.nilvera.com/einvoice/Send/Model", Method.Post);
-            request.AddHeader("Authorization", "Bearer 9F9FFF28D59C0B99019C66F322BC1C2350F3D25174C99052B9DCFA3956AAA66B");
+            var client = new RestClient(BaseUrl);
+            var request = new RestRequest("/einvoice/Send/Model", Method.Post);
+            request.AddHeader("Authorization", $"Bearer {ApiKey}");
             request.AddJsonBody(eInvoiceModel);
             request.AddHeader("Content-Type", "application/json");
             request.AddHeader("Accept", "application/json");
@@ -154,11 +178,8 @@ namespace NilveraAPI.Request.E_Invocie
             var model=JsonConvert.DeserializeObject<InvoiceResponse>(response.Content);
             return model;
         }
-        #endregion
 
 
-
-        #region E-Faturanın Ubl Modelini Xml'e çevirme
         public async Task<string> UblConvertXml()
         {
             string basePath = AppDomain.CurrentDomain.BaseDirectory.Replace("bin\\Debug\\net6.0", "BaseXslt\\E-Invoice");
@@ -434,23 +455,74 @@ namespace NilveraAPI.Request.E_Invocie
 
             return Serializer.Serializer.LoadOrCreateXml(newcontent);
         }
-        #endregion
 
 
-
-        #region Faturayı XML olarak gönderir.
         public async Task<InvoiceResponse> SendXml()
         {
             string file_path = AppDomain.CurrentDomain.BaseDirectory + "Dosyalar\\XML\\Fatura.xml";
-            var client = new RestClient();
-            var request = new RestRequest("https://apitest.nilvera.com/einvoice/Send/Xml?Alias=urn:mail:defaultpk@nilvera.com", Method.Post);
-            request.AddHeader("Authorization", "Bearer 9F9FFF28D59C0B99019C66F322BC1C2350F3D25174C99052B9DCFA3956AAA66B");     //Portaldan aldığınız API KEY giriniz.
+            var client = new RestClient(BaseUrl);
+            var request = new RestRequest("/einvoice/Send/Xml?Alias=urn:mail:defaultpk@nilvera.com", Method.Post);
+            request.AddHeader("Authorization", $"Bearer {ApiKey}");    
             request.AddHeader("Content-Type", "multipart/form-data");
             request.AddFile("file", file_path, "application/xml");
             var response = await client.ExecuteAsync(request);
             var model = JsonConvert.DeserializeObject<InvoiceResponse>(response.Content);
             return model;
         }
-        #endregion
+
+        public async Task<GeneralResponse<Pagination<SaleInvoiceResponse>>> Pagination()
+        {
+            var client = new RestClient(BaseUrl);
+            var request = new RestRequest("/einvoice/Sale", Method.Get);
+            request.AddHeader("Authorization", $"Bearer {ApiKey}");
+            request.RequestFormat = DataFormat.Json;
+            request.AddQueryParameter("Page", 1);
+            request.AddQueryParameter("PageSize", 30);
+            request.AddQueryParameter("StartDate", DateTime.Now.AddDays(-7).ToString("yyyy-MM-ddTHH:mm:ss.fffZ"));
+            request.AddQueryParameter("EndDate", DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffZ"));
+            var response = await client.ExecuteAsync<Pagination<SaleInvoiceResponse>>(request);
+            var generalResponse = response.Parse();
+            return generalResponse;
+        }
+
+        public async Task<string> DownloadPdf(string UUID)
+        {            
+            RestClient client = new RestClient(BaseUrl);
+            var request = new RestRequest($"/einvoice/Sale/{UUID}/pdf", Method.Get);
+            request.AddHeader("Authorization", $"Bearer {ApiKey}");
+            var response = await client.ExecuteAsync(request);
+
+            var base64 = JsonConvert.DeserializeObject<string>(response.Content);
+
+            var path = Serializer.Serializer.LoadOrCreatePdf(base64);
+            return path;
+        }
+
+        public async Task<string> DownloadHtml(string UUID)
+        {
+            RestClient client = new RestClient(BaseUrl);
+            var request = new RestRequest($"/einvoice/Sale/{UUID}/html", Method.Get);
+            request.AddHeader("Authorization", $"Bearer {ApiKey}");
+            var response = await client.ExecuteAsync(request);
+
+            var html = JsonConvert.DeserializeObject<string>(response.Content);
+
+            var path = Serializer.Serializer.LoadOrCreateHtml(html);
+            return path;
+        }
+
+        public async Task<string> DownloadXml(string UUID)
+        {
+            RestClient client = new RestClient(BaseUrl);
+            var request = new RestRequest($"/einvoice/Sale/{UUID}/xml", Method.Get);
+            request.AddHeader("Authorization", $"Bearer {ApiKey}");
+            var response = await client.ExecuteAsync(request);
+
+            var xml = JsonConvert.DeserializeObject<string>(response.Content);
+
+            var path = Serializer.Serializer.LoadOrCreateXml(xml);
+            return path;
+
+        }
     }
 }

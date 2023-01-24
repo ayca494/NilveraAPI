@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 using NilveraAPI.Models.Dto;
 using NilveraAPI.Models.Dto.Shared;
 using NilveraAPI.Models.Response;
@@ -16,6 +18,15 @@ namespace NilveraAPI.Request.E_Producer
 {
     public class EProducerApi : IInvoiceApi<ProducerResponse>
     {
+        private readonly IConfiguration configuration;
+        public string BaseUrl { get; set; }
+        public string ApiKey { get; set; }
+        public EProducerApi()
+        {
+            configuration = ServiceRegistration.Services.GetService<IConfiguration>();
+            BaseUrl = configuration["BaseUrl"];
+            ApiKey = configuration["ApiKey"];
+        }
         public async Task<ProducerResponse> SendModel()
         {
             ProducerModel producerModel = new ProducerModel()
@@ -99,9 +110,9 @@ namespace NilveraAPI.Request.E_Producer
                 }
             };
 
-            var client = new RestClient();
-            var request = new RestRequest("https://apitest.nilvera.com/emm/Send/Model", Method.Post);
-            request.AddHeader("Authorization", "Bearer 9F9FFF28D59C0B99019C66F322BC1C2350F3D25174C99052B9DCFA3956AAA66B");
+            var client = new RestClient(BaseUrl);
+            var request = new RestRequest("/emm/Send/Model", Method.Post);
+            request.AddHeader("Authorization", $"Bearer {ApiKey}");
             request.AddJsonBody(producerModel);
             request.AddHeader("Content-Type", "application/json");
             request.AddHeader("Accept", "application/json");
@@ -113,9 +124,9 @@ namespace NilveraAPI.Request.E_Producer
         public async  Task<ProducerResponse> SendXml()
         {
             string file_path = AppDomain.CurrentDomain.BaseDirectory + "Dosyalar\\XML\\Fatura.xml";
-            var client = new RestClient();
-            var request = new RestRequest("https://apitest.nilvera.com/emm/Send/Xml?Alias=urn:mail:defaultpk@nilvera.com", Method.Post);
-            request.AddHeader("Authorization", "Bearer 9F9FFF28D59C0B99019C66F322BC1C2350F3D25174C99052B9DCFA3956AAA66B");     //Portaldan aldığınız API KEY giriniz.
+            var client = new RestClient(BaseUrl);
+            var request = new RestRequest("/emm/Send/Xml?Alias=urn:mail:defaultpk@nilvera.com", Method.Post);
+            request.AddHeader("Authorization", $"Bearer {ApiKey}");     
             request.AddHeader("Content-Type", "multipart/form-data");
             request.AddFile("file", file_path, "application/xml");
             var response = await client.ExecuteAsync(request);

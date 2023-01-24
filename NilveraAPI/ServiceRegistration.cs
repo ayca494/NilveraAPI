@@ -1,5 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using NilveraAPI.Abstract;
+using NilveraAPI.Request;
+using NilveraAPI.Request.E_Archive;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -12,6 +15,24 @@ namespace NilveraAPI
 {
     public class ServiceRegistration
     {
-        
+        private static IServiceProvider _serviceProvider;
+        public static IServiceProvider Services { get => _serviceProvider; }
+        public static void Main(string[] args)
+        {
+            var configuration = new ConfigurationBuilder()
+             .SetBasePath(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location))
+             .AddJsonFile("appsetting.json")
+             .Build();
+
+            var serviceProvider = new ServiceCollection()
+                                    .AddSingleton<IConfiguration>(instance => new ConfigurationBuilder()
+             .SetBasePath(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location))
+             .AddJsonFile("appsetting.json")
+             .Build())
+                                    .BuildServiceProvider();
+
+            _serviceProvider = serviceProvider;
+
+        }
     }
 }

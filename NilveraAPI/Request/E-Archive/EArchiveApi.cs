@@ -1,4 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
+using NilveraAPI.Abstract;
 using NilveraAPI.Enums;
 using NilveraAPI.Models;
 using NilveraAPI.Models.Dto;
@@ -18,6 +21,15 @@ namespace NilveraAPI.Request.E_Archive
 {
     public class EArchiveApi : IInvoiceApi<InvoiceResponse> 
     {
+        private readonly IConfiguration configuration;
+        public string baseUrl { get; set; }
+        public string apiKey { get; set; }
+        public EArchiveApi()
+        {
+            configuration = ServiceRegistration.Services.GetService<IConfiguration>();
+            baseUrl=configuration["BaseUrl"];
+            apiKey=configuration["ApiKey"];
+        }
         public async Task<InvoiceResponse> SendModel()
         {
             ArchiveInvoiceModel archiveInvoiceModel = new ArchiveInvoiceModel()
@@ -108,9 +120,9 @@ namespace NilveraAPI.Request.E_Archive
                 }
             };
 
-            var client = new RestClient();
-            var request = new RestRequest("https://apitest.nilvera.com/earchive/Send/Model", Method.Post);
-            request.AddHeader("Authorization", "Bearer 9F9FFF28D59C0B99019C66F322BC1C2350F3D25174C99052B9DCFA3956AAA66B");
+            var client = new RestClient(baseUrl);
+            var request = new RestRequest("/earchive/Send/Model", Method.Post);
+            request.AddHeader("Authorization", $"Bearer {apiKey}");
             request.AddJsonBody(archiveInvoiceModel);
             request.AddHeader("Content-Type", "application/json");
             request.AddHeader("Accept", "application/json");
@@ -122,9 +134,9 @@ namespace NilveraAPI.Request.E_Archive
         public async Task<InvoiceResponse> SendXml()
         {
             string file_path = AppDomain.CurrentDomain.BaseDirectory + "Dosyalar\\XML\\Fatura.xml";
-            var client = new RestClient();
-            var request = new RestRequest("https://apitest.nilvera.com/earchive/Send/Xml?Alias=urn:mail:defaultpk@nilvera.com", Method.Post);
-            request.AddHeader("Authorization", "Bearer 9F9FFF28D59C0B99019C66F322BC1C2350F3D25174C99052B9DCFA3956AAA66B");     //Portaldan aldığınız API KEY giriniz.
+            var client = new RestClient(baseUrl);
+            var request = new RestRequest("/earchive/Send/Xml?Alias=urn:mail:defaultpk@nilvera.com", Method.Post);
+            request.AddHeader("Authorization", $"Bearer {apiKey}");     
             request.AddHeader("Content-Type", "multipart/form-data");
             request.AddFile("file", file_path, "application/xml");
             var response = await client.ExecuteAsync(request);

@@ -1,7 +1,11 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 using NilveraAPI.Enums;
 using NilveraAPI.Models;
+using NilveraAPI.Models.CheckGlobalCompany;
 using NilveraAPI.Models.Dto.Shared;
+using NilveraAPI.Models.Pagination;
 using NilveraAPI.Models.Response;
 using NilveraAPI.Models.UblModels.Despatch;
 using NilveraAPI.Models.UblModels.Shared;
@@ -17,6 +21,27 @@ namespace NilveraAPI.Request.E_Despatch
 {
     public class EDespatchApi : IInvoiceApi<DespatchResponse>
     {
+        private readonly IConfiguration configuration;
+        public string BaseUrl { get; set; }
+        public string ApiKey { get; set; }
+        public EDespatchApi()
+        {
+            configuration = ServiceRegistration.Services.GetService<IConfiguration>();
+            BaseUrl = configuration["BaseUrl"];
+            ApiKey = configuration["ApiKey"];
+        }
+
+        public async Task<GeneralResponse<IEnumerable<GlobalCompanyInfoResponse>>> CheckGlobalCompany(string TaxNumber)
+        {
+            RestClient client = new RestClient(BaseUrl);
+            var request = new RestRequest($"/general/GlobalCompany/Check/TaxNumber/{TaxNumber}", Method.Get);
+            request.AddHeader("Authorization", $"Bearer {ApiKey}");
+            request.AddQueryParameter("globalUserType", GlobalUserType.DespatchAdvice);
+            var response = await client.ExecuteAsync<IEnumerable<GlobalCompanyInfoResponse>>(request);
+            var generalResponse = response.Parse();
+            return generalResponse;
+        }
+
         public async Task<DespatchResponse> SendModel()
         {
             EDespatchModel eDespatch = new EDespatchModel()
@@ -129,9 +154,9 @@ namespace NilveraAPI.Request.E_Despatch
             };
 
 
-            var client = new RestClient();
-            var request = new RestRequest("https://apitest.nilvera.com/edespatch/Send/Model", Method.Post);
-            request.AddHeader("Authorization", "Bearer 9F9FFF28D59C0B99019C66F322BC1C2350F3D25174C99052B9DCFA3956AAA66B");
+            var client = new RestClient(BaseUrl);
+            var request = new RestRequest("/edespatch/Send/Model", Method.Post);
+            request.AddHeader("Authorization", $"Bearer {ApiKey}"); 
             request.AddJsonBody(eDespatch);
             request.AddHeader("Content-Type", "application/json");
             request.AddHeader("Accept", "application/json");
@@ -143,9 +168,9 @@ namespace NilveraAPI.Request.E_Despatch
         public async Task<DespatchResponse> SendXml()
         {
             string file_path = AppDomain.CurrentDomain.BaseDirectory + "Dosyalar\\XML\\Fatura.xml";
-            var client = new RestClient();
-            var request = new RestRequest("https://apitest.nilvera.com/edespatch/Send/Xml?Alias=urn:mail:defaultpk@nilvera.com", Method.Post);
-            request.AddHeader("Authorization", "Bearer 9F9FFF28D59C0B99019C66F322BC1C2350F3D25174C99052B9DCFA3956AAA66B");     //Portaldan aldığınız API KEY giriniz.
+            var client = new RestClient(BaseUrl);
+            var request = new RestRequest("/edespatch/Send/Xml?Alias=urn:mail:defaultpk@nilvera.com", Method.Post);
+            request.AddHeader("Authorization", $"Bearer {ApiKey}");     //Portaldan aldığınız API KEY giriniz.
             request.AddHeader("Content-Type", "multipart/form-data");
             request.AddFile("file", file_path, "application/xml");
             var response = await client.ExecuteAsync(request);
