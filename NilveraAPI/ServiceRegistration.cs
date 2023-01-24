@@ -19,11 +19,6 @@ namespace NilveraAPI
         public static IServiceProvider Services { get => _serviceProvider; }
         public static void Main(string[] args)
         {
-            var configuration = new ConfigurationBuilder()
-             .SetBasePath(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location))
-             .AddJsonFile("appsetting.json")
-             .Build();
-
             var serviceProvider = new ServiceCollection()
                                     .AddSingleton<IConfiguration>(instance => new ConfigurationBuilder()
              .SetBasePath(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location))
