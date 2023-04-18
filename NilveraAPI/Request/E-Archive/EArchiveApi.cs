@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
-using NilveraAPI.Abstract;
 using NilveraAPI.Enums;
 using NilveraAPI.Models;
 using NilveraAPI.Models.Dto;

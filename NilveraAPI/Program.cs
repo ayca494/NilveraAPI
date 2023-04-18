@@ -40,28 +40,28 @@ using Microsoft.Extensions.DependencyInjection;
 ServiceRegistration.Main(args);
 
 #region Mükellef Sorgulama
-//Console.WriteLine("TCKN ya da VKN giriniz : ");
-//var taxNumber = Console.ReadLine();
-//EInvoiceApi checkGlobalcompany = new EInvoiceApi();
-//var generalResponse = await checkGlobalcompany.CheckGlobalCompany(taxNumber);
+Console.WriteLine("TCKN ya da VKN giriniz : ");
+var taxNumber = Console.ReadLine();
+EInvoiceApi checkGlobalcompany = new EInvoiceApi();
+var generalResponse = await checkGlobalcompany.CheckGlobalCompany(taxNumber);
 
-//if (generalResponse.Content.Any())
-//{
-//    foreach (var item in generalResponse.Content)
-//    {
-//        Console.WriteLine($"\n{item.FirstCreatedTime} Tarihinden İtibaren E-Fatura Mükellefidir.");
-//        Console.WriteLine($"Ünvan : {item.Title}");
-//        Console.WriteLine($"Etiket : {item.Name}");
-//        Console.WriteLine($"Tipi : {item.Type}");
-//        Console.WriteLine($"Etiket Oluşturulma Tarihi : {item.CreationTime}");
-//        Console.WriteLine("******************************************************");
-//    }
-//}
-//else
-//{
-//    Console.WriteLine("\nE-Fatura Mükellefi Değildir.\n");
-//}
-//Console.ReadLine();
+if (generalResponse.Content.Any())
+{
+    foreach (var item in generalResponse.Content)
+    {
+        Console.WriteLine($"\n{item.FirstCreatedTime} Tarihinden İtibaren E-Fatura Mükellefidir.");
+        Console.WriteLine($"Ünvan : {item.Title}");
+        Console.WriteLine($"Etiket : {item.Name}");
+        Console.WriteLine($"Tipi : {item.Type}");
+        Console.WriteLine($"Etiket Oluşturulma Tarihi : {item.CreationTime}");
+        Console.WriteLine("******************************************************");
+    }
+}
+else
+{
+    Console.WriteLine("\nE-Fatura Mükellefi Değildir.\n");
+}
+Console.ReadLine();
 #endregion
 
 
